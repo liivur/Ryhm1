@@ -1,6 +1,12 @@
 *.class
+
+# User-specific stuff:
 *.classpath
 *.project
+*.iml
+
+# Directory-based project format:
+.idea/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
