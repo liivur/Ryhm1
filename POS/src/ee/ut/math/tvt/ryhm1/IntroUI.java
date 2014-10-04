@@ -1,62 +1,103 @@
 package ee.ut.math.tvt.ryhm1;
 
-//kasutada on vaja jpanel ja pilti 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
+
 import java.awt.Container;
 import java.awt.Font;
-
-import java.util.Properties;
-
-//vaja IO-d
-import java.io.File;
+import java.awt.GridLayout;
 import java.io.FileInputStream;
 import java.io.IOException;
-
+import java.util.Properties;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import org.apache.log4j.Logger;
-
 
 public class IntroUI extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
 	//logija paika
 	private static final Logger log = Logger.getLogger(Intro.class);
-	
-	public IntroUI(String title) {	
-		//Pealkirja saame Inro klassis IntroUI väljakutsega
+
+	//Muutujad hilisema aknasisu tarbeks
+	String name;
+	String leader;
+	String email ;
+	String teamMembers;
+	String logo;
+	String version;
+
+	//loome seaded
+	Properties properties = new Properties();
+
+
+
+	public IntroUI(String title) {
+
 		super(title);
 		
 		//loeme sisse info
 		log.info("UI initialized");
-		Properties readVersion = readPropertiesFromFile("version.properties");
-		Properties readProperties = readPropertiesFromFile("application.properties");
-		makeUserInterface(readProperties, readVersion);
 		
-		//Paneeli mõõdud		
-		this.setSize(600, 400);
-		this.setLocation(300, 300);
-		
-		//Sulgemisel sulgeme rakenduse
+		this.setSize(265, 550);
+		this.setLocation(200, 200);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		Properties readProperites = new Properties();
+		Properties readVersion  = new Properties();
+		try {
+			readProperites.load(new FileInputStream("application.properties"));
+			readVersion.load(new FileInputStream("version.properties"));		
+		} catch (IOException e) {
+			log.error("There seems to be an error with porperties files");
+			e.printStackTrace();
+		}
+				
+		makeUserInterface(readProperites, readVersion);
+		
+		log.info("Window creation completed");
 	}
 	
-	//Meetod avaakna jaoks
-	void makeUserInterface(Properties readProperties, Properties readVersion) {
+	private void makeUserInterface(Properties readProperites, Properties readVersion ) {
 		
-		//Paneme paika liidese
-		//TODO :)
+		this.setLayout(new GridLayout(0, 1));
+			
+		Container screenTable = this.getLayeredPane();
+		screenTable.setLayout(new BoxLayout(screenTable, BoxLayout.Y_AXIS));
 		
-		//Pealkirjad 
-		final String[] headings = {"Team_name","Team_leader","Leader_email","Team"};
+		Font shape = new Font("ROMAN_BASELINE",1,16);
 		
+		name = readProperites.getProperty("Team_name");
+		screenTable.add(new JLabel("*TEAM NAME: " +name)).setFont(shape);
+		screenTable.add(new JLabel("--"));
+		leader = readProperites.getProperty("Team_leader");
+		screenTable.add(new JLabel("*LEADER: " +leader)).setFont(shape);
+		screenTable.add(new JLabel("--"));
+		email =  readProperites.getProperty("Leader_email");
+		screenTable.add(new JLabel("*LEADER'S EMAIL: ")).setFont(shape);
+		screenTable.add(new JLabel(email)).setFont(shape);
+		screenTable.add(new JLabel("--"));
+		teamMembers =  readProperites.getProperty("Team");
+		String delimiter = ", ";
+		String[] temp;
+		temp = teamMembers.split(delimiter);
+		String e = temp[0];
+		String s = temp[1];
+		String r = temp[2];
+		String d = temp[3];
+		
+		screenTable.add(new JLabel("*TEAM MEMBERS: ")).setFont(shape);
+		screenTable.add(new JLabel("  1."+e)).setFont(shape);
+		screenTable.add(new JLabel("  2."+s)).setFont(shape);
+		screenTable.add(new JLabel("  3."+r)).setFont(shape);
+		screenTable.add(new JLabel("  4."+d)).setFont(shape);
+		logo =  readProperites.getProperty("logo");	
+		screenTable.add(new JLabel(new ImageIcon(logo)));
+		version = readVersion.getProperty("build.number");
+		screenTable.add(new JLabel("Version: " +version)).setFont(shape);	
 	}
-		//Kirjutame/loeme properties info välja
-	Properties readPropertiesFromFile(String filename) {
-		return null;
-		//TODO :)
-	}
-
+		
 }
+
+

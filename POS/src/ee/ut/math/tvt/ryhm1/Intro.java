@@ -24,8 +24,9 @@ public class Intro {
 		log.info("Intro initialized");
 		
 		//Loome uue IntroUI objekti ning muudame selle nähtavaks
-		IntroUI theTeamInfo = new IntroUI("Rühma tutvustav aken");
+		IntroUI theTeamInfo = new IntroUI("Team Introduction");
 		theTeamInfo.setVisible(true);
+		theTeamInfo.setAlwaysOnTop(true);
 	}
 
 }
