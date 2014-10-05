@@ -2,30 +2,27 @@
 <project basedir="." name="POS" default="build">
 
 	<!-- Definitions of variables used during the rest of this script -->
+	<property file="version.properties" />
+	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+	<property file="application.properties" />
 
-	<property name="version.file" value="version.properties"/>
-	<property file="${version.file}"/>
-	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
+	<property name="build.jar.dir" value="${build.dir}/jar"/>
 	<property name="src.dir" value="${basedir}/src"/>
-	<property name="dist.dir" value="${basedir}/dist"/>
-	<property name="conf.dir" value="${basedir}/etc"/>
-	<property name="doc.dir" value="${build.dir}/doc"/>
-	<property name="test.reports.dir" value="${build.dir}/reports/"/>
 
 	<!-- Definitions of classpath variants used for different tasks -->
-
+	
 	<path id="compile.classpath">
-		<fileset dir="${basedir}/lib">
+		<!--Defining a classpath to include lib folder for compilation --> 
+		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
-
+	
+	<!-- TODO: Add comments @@tsudmi -->
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}"/>
-		<!-- configuration -->
-		<pathelement location="${conf.dir}"/>
 		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
@@ -33,23 +30,6 @@
 
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
-	
-	<target name="version">
-		<echo>Versin: ${build.number}</echo>	
-	</target>
-	
-	<target name="revision">
-		<propertyfile file="${version.file}">
-			<entry key="build.revision.number" type="int" operation="+" value="1" pattern="00" />
-			<!-- build.number doesn't work correctly (properties are immmutable so it gets the old value)
-			but I don't know how to fix it... so the version number is always 1 behind.
-			The best way would be to not have build.number in the file, but instead to generate it from 
-			major, minor and revision numbers each time it's asked as I did above, but it seems to me that the 
-			task wants it to be in the file, which is kinda dumb and I can't get it to work -->
-			<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
-		</propertyfile>
-	</target>
-
 	<target name="run" description="Run the application">
 		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="test.classpath" fork="yes" />
 	</target>
@@ -60,17 +40,55 @@
 		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
+            debug="true"
+            debuglevel="lines,vars,source"	
+            encoding="utf-8"
+            compiler="modern"
             target="1.7"
             source="1.7"
 			includeAntRuntime="false">
 			<classpath refid="compile.classpath"/>
 		</javac>
-		<antcall target="revision"></antcall>
+	</target>
+	
+	<!-- TODO: Fix dist target for the proper jrun response @@tsudmi -->
+	<target name="dist" description="Build .jar file for distribution." depends="build, revision">
+		<jar destfile="${build.jar.dir}/ryhm1.jar" basedir="${build.classes.dir}">
+			<zipfileset dir="${basedir}" includes="application.properties" fullpath="application.properties" />
+			<zipfileset dir="${basedir}" includes="version.properties" fullpath="version.properties" />
+			<manifest>
+				<attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
+				<attribute name="Class-Path" value="lib/log4j-core-2.0.2.jar lib/log4j-api-2.0.2.jar lib/log4j-api-2.0.2-sources.jar" />
+				<attribute name="Implementation-Vendor" value="ryhm1" />
+				<attribute name="Implementation-Title" value="IntroUI" />
+				<attribute name="Implementation-Version" value="${build.number}" />
+			</manifest>
+		</jar>
+		<copy todir="${build.jar.dir}" flatten="true">
+			<path refid="compile.classpath" />
+			<path path="${basedir}/application.properties" />
+			<path path="${basedir}/version.properties" />
+		</copy>
+	</target>
+
+	<target name="revision">
+		<propertyfile file="version.properties" comment="Version properties">
+			<entry key="build.revision.number" type="int" operation="+" value="1" pattern="00"/>
+		</propertyfile>
+		<property file="version.properties" prefix="new" />
+		<propertyfile file="version.properties" comment="Version properties">
+			<entry key="build.number" operation="=" value="${new.build.major.number}.${new.build.minor.number}.${new.build.revision.number}" />
+		</propertyfile>
+	</target>
+	
+	<target name="jrun" description="Run the built jar file.">
+		<java jar="${build.jar.dir}/ryhm1.jar" fork="true" />
 	</target>
 
 	<!-- Clean up build system results -->
 	<target name="clean" description="Clean up build system results">
 		<delete dir="${build.dir}"/>
+
 	</target>
 
 </project>

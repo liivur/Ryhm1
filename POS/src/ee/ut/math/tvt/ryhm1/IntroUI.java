@@ -11,14 +11,15 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class IntroUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 
 	//logija paika
-	private static final Logger log = Logger.getLogger(Intro.class);
+	private static final Logger log = LogManager.getLogger(Intro.class);
 
 	//Muutujad hilisema aknasisu tarbeks
 	String name;
