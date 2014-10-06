@@ -9,20 +9,20 @@
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
 	<property name="build.jar.dir" value="${build.dir}/jar"/>
-	<property name="src.dir" value="${basedir}/src"/>
+    <property name="src.dir" value="${basedir}/src"/>
 
 	<!-- Definitions of classpath variants used for different tasks -->
 	
 	<path id="compile.classpath">
-		<!--Defining a classpath to include lib folder for compilation --> 
+		<!--Defining a classpath to lib folder for compilation --> 
 		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
 	
-	<!-- TODO: Add comments @@tsudmi -->
-	<path id="test.classpath">
-		<pathelement location="${build.classes.dir}"/>
+	<path id="run.classpath">
+        <!-- Defining a classpath to lib and build/classes folders for running -->
+        <pathelement location="${build.classes.dir}"/>
 		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
@@ -31,7 +31,7 @@
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
 	<target name="run" description="Run the application">
-		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="test.classpath" fork="yes" />
+		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes" />
 	</target>
 
 	<target name="build" description="Build the system">
@@ -51,32 +51,28 @@
 		</javac>
 	</target>
 	
-	<!-- TODO: Fix dist target for the proper jrun response @@tsudmi -->
-	<target name="dist" description="Build .jar file for distribution." depends="build, revision">
+    <target name="dist" description="Build .jar file for distribution." depends="build, revision">
 		<jar destfile="${build.jar.dir}/ryhm1.jar" basedir="${build.classes.dir}">
-			<zipfileset dir="${basedir}" includes="application.properties" fullpath="application.properties" />
-			<zipfileset dir="${basedir}" includes="version.properties" fullpath="version.properties" />
-			<manifest>
-				<attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
-				<attribute name="Class-Path" value="lib/log4j-core-2.0.2.jar lib/log4j-api-2.0.2.jar lib/log4j-api-2.0.2-sources.jar" />
-				<attribute name="Implementation-Vendor" value="ryhm1" />
-				<attribute name="Implementation-Title" value="IntroUI" />
-				<attribute name="Implementation-Version" value="${build.number}" />
-			</manifest>
-		</jar>
-		<copy todir="${build.jar.dir}" flatten="true">
-			<path refid="compile.classpath" />
-			<path path="${basedir}/application.properties" />
-			<path path="${basedir}/version.properties" />
-		</copy>
+            <zipfileset dir="${basedir}" includes="application.properties" />
+            <zipfileset dir="${basedir}" includes="version.properties" />
+            <zipgroupfileset dir="${basedir}/lib" includes="*.jar"/>
+        <manifest>
+            <attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
+            <attribute name="Class-Path" value="*.jar" />
+            <attribute name="Implementation-Vendor" value="ryhm1" />
+            <attribute name="Implementation-Title" value="IntroUI" />
+            <attribute name="Implementation-Version" value="${build.number}" />
+        </manifest>
+        </jar>
 	</target>
 
-	<target name="revision">
+	<target name="revision" description="Increase the revision number and build number by 1 for every distribution">
 		<propertyfile file="version.properties" comment="Version properties">
 			<entry key="build.revision.number" type="int" operation="+" value="1" pattern="00"/>
 		</propertyfile>
 		<property file="version.properties" prefix="new" />
 		<propertyfile file="version.properties" comment="Version properties">
+            <!-- build number and revision number should be increased separately -->
 			<entry key="build.number" operation="=" value="${new.build.major.number}.${new.build.minor.number}.${new.build.revision.number}" />
 		</propertyfile>
 	</target>
@@ -92,4 +88,3 @@
 	</target>
 
 </project>
-
