@@ -4,9 +4,7 @@ package ee.ut.math.tvt.ryhm1;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import javax.swing.BoxLayout;
@@ -51,11 +49,6 @@ public class IntroUI extends JFrame {
 		Properties readProperties = new Properties();
 		Properties readVersion  = new Properties();
 		try {
-//			readProperties.load(new FileInputStream("application.properties"));
-//			readVersion.load(new FileInputStream("version.properties"));
-//			InputStream resource = getClass().getResourceAsStream("/application.properties");
-//			System.out.println(resource);
-//			System.out.println(resource.available());
 			readProperties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
 			readVersion.load(getClass().getClassLoader().getResourceAsStream("version.properties"));
 		} catch (IOException e) {

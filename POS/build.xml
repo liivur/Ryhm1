@@ -23,7 +23,6 @@
 	<path id="run.classpath">
         <!-- Defining a classpath to lib and build/classes folders for running -->
         <pathelement location="${build.classes.dir}"/>
-		<pathelement location="etc"/>
 		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
@@ -41,6 +40,7 @@
 		<copy todir="${build.classes.dir}">
 			<fileset dir="${basedir}" includes="*.properties"/>
 			<fileset dir="${basedir}" includes="Ryhm1_logo.png"/>
+			<fileset dir="${basedir}/etc" includes="*.*"/>
 		</copy>
 		<javac
             srcdir="${src.dir}"
@@ -58,10 +58,6 @@
 	
     <target name="dist" description="Build .jar file for distribution." depends="build, revision">
 		<jar destfile="${build.jar.dir}/ryhm1.jar" basedir="${build.classes.dir}">
-            <zipfileset dir="${basedir}" includes="application.properties" />
-            <zipfileset dir="${basedir}" includes="version.properties" />
-			<zipfileset dir="${basedir}" includes="Ryhm1_logo.png" />
-			<zipfileset dir="${basedir}/etc" includes="log4j2.xml" />
             <zipgroupfileset dir="${basedir}/lib" includes="*.jar"/>
 	        <manifest>
 	            <attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
