@@ -38,6 +38,10 @@
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
+		<copy todir="${build.classes.dir}">
+			<fileset dir="${basedir}" includes="*.properties"/>
+			<fileset dir="${basedir}" includes="Ryhm1_logo.png"/>
+		</copy>
 		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
