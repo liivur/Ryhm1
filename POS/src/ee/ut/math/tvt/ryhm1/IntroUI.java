@@ -6,11 +6,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -45,17 +48,22 @@ public class IntroUI extends JFrame {
 		this.setLocation(200, 200);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-		Properties readProperites = new Properties();
+		Properties readProperties = new Properties();
 		Properties readVersion  = new Properties();
 		try {
-			readProperites.load(new FileInputStream("application.properties"));
-			readVersion.load(new FileInputStream("version.properties"));		
+//			readProperties.load(new FileInputStream("application.properties"));
+//			readVersion.load(new FileInputStream("version.properties"));
+//			InputStream resource = getClass().getResourceAsStream("/application.properties");
+//			System.out.println(resource);
+//			System.out.println(resource.available());
+			readProperties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
+			readVersion.load(getClass().getClassLoader().getResourceAsStream("version.properties"));
 		} catch (IOException e) {
 			log.error("There seems to be an error with porperties files");
-			e.printStackTrace();
+			log.error(e.getLocalizedMessage(), e);
 		}
 				
-		makeUserInterface(readProperites, readVersion);
+		makeUserInterface(readProperties, readVersion);
 		
 		log.info("Window creation completed");
 	}
@@ -94,7 +102,7 @@ public class IntroUI extends JFrame {
 		screenTable.add(new JLabel("  3."+r)).setFont(shape);
 		screenTable.add(new JLabel("  4."+d)).setFont(shape);
 		logo =  readProperites.getProperty("logo");	
-		screenTable.add(new JLabel(new ImageIcon(logo)));
+		screenTable.add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource(logo))));
 		version = readVersion.getProperty("build.number");
 		screenTable.add(new JLabel("Version: " +version)).setFont(shape);	
 	}

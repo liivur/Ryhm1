@@ -56,14 +56,16 @@
 		<jar destfile="${build.jar.dir}/ryhm1.jar" basedir="${build.classes.dir}">
             <zipfileset dir="${basedir}" includes="application.properties" />
             <zipfileset dir="${basedir}" includes="version.properties" />
+			<zipfileset dir="${basedir}" includes="Ryhm1_logo.png" />
+			<zipfileset dir="${basedir}/etc" includes="log4j2.xml" />
             <zipgroupfileset dir="${basedir}/lib" includes="*.jar"/>
-        <manifest>
-            <attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
-            <attribute name="Class-Path" value="*.jar" />
-            <attribute name="Implementation-Vendor" value="ryhm1" />
-            <attribute name="Implementation-Title" value="IntroUI" />
-            <attribute name="Implementation-Version" value="${build.number}" />
-        </manifest>
+	        <manifest>
+	            <attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
+	            <attribute name="Class-Path" value="*.jar" />
+	            <attribute name="Implementation-Vendor" value="ryhm1" />
+	            <attribute name="Implementation-Title" value="IntroUI" />
+	            <attribute name="Implementation-Version" value="${build.number}" />
+	        </manifest>
         </jar>
 	</target>
 
