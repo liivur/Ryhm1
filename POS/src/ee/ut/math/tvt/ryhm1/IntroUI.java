@@ -20,7 +20,7 @@ public class IntroUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	//logija paika
-	private static final Logger log = LogManager.getLogger(Intro.class);
+	private static final Logger log = LogManager.getLogger(IntroUI.class);
 
 	//Muutujad hilisema aknasisu tarbeks
 	String name;
