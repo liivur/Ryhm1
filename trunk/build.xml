@@ -83,6 +83,13 @@
 	<target name="jrun" description="Run the built jar file." depends="dist">
 		<java jar="${build.jar.dir}/ryhm1.jar" fork="true" />
 	</target>
+	
+	
+	<target name="runc" depends="build" description="Run the application (console)">
+		<java classname="ee.ut.math.tvt.[team].Intro" classpathref="test.classpath" fork="yes">
+			<arg value="console" />
+		</java>
+	</target>
 
 	<!-- Clean up build system results -->
 	<target name="clean" description="Clean up build system results">
