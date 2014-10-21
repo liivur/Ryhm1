@@ -7,6 +7,7 @@
 	<property file="application.properties" />
 
 	<property name="build.dir" value="${basedir}/build"/>
+	<property name="assets.dir" value="${basedir}/etc"/>
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
 	<property name="build.jar.dir" value="${build.dir}/jar"/>
     <property name="src.dir" value="${basedir}/src"/>
@@ -23,6 +24,8 @@
 	<path id="run.classpath">
         <!-- Defining a classpath to lib and build/classes folders for running -->
         <pathelement location="${build.classes.dir}"/>
+		<pathelement location="${basedir}"/>
+		<pathelement location="${assets.dir}"/>
 		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
@@ -34,14 +37,9 @@
 		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes" />
 	</target>
 
-	<target name="build" description="Build the system">
+	<target name="build" description="Build the system" depends="clean">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
-		<copy todir="${build.classes.dir}">
-			<fileset dir="${basedir}" includes="*.properties"/>
-			<fileset dir="${basedir}" includes="Ryhm1_logo.png"/>
-			<fileset dir="${basedir}/etc" includes="*.*"/>
-		</copy>
 		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
@@ -58,7 +56,9 @@
 	
     <target name="dist" description="Build .jar file for distribution." depends="build, revision">
 		<jar destfile="${build.jar.dir}/ryhm1.jar" basedir="${build.classes.dir}">
-            <zipgroupfileset dir="${basedir}/lib" includes="*.jar"/>
+			<fileset dir="${basedir}" includes="*.properties"/>
+			<zipgroupfileset dir="${basedir}/lib" includes="*.jar"/>		
+			<fileset dir="${assets.dir}" includes="*" />
 	        <manifest>
 	            <attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
 	            <attribute name="Class-Path" value="*.jar" />
