@@ -28,3 +28,6 @@
 2014-10-21 12:41:33,105 INFO e.u.m.t.r.Intro [main] Intro initialized 
 2014-10-21 12:41:33,166 INFO e.u.m.t.r.IntroUI [main] UI initialized 
 2014-10-21 12:41:33,186 INFO e.u.m.t.r.IntroUI [main] Window creation completed 
+2014-10-21 13:03:10,389 INFO e.u.m.t.r.Intro [main] Intro initialized 
+2014-10-21 13:03:10,485 INFO e.u.m.t.r.IntroUI [main] UI initialized 
+2014-10-21 13:03:10,527 INFO e.u.m.t.r.IntroUI [main] Window creation completed 

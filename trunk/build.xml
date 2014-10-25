@@ -2,6 +2,7 @@
 <project basedir="." name="trunk" default="build">
 
 	<!-- Definitions of variables used during the rest of this script -->
+	<property environment="env" />
 	<property file="version.properties" />
 	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 	<property file="application.properties" />
@@ -30,6 +31,21 @@
 			<include name="*.jar" />
 		</fileset>
 	</path>
+	
+	<!-- Definitions of macros -->
+	<macrodef name="git">
+		<attribute name="command" />
+		<attribute name="dir" default="${basedir}" />
+		<element name="args" optional="true" />
+		<sequential>
+			<echo message="git @{command}" />
+			<exec executable="git" dir="@{dir}" >
+				<env key="PATH" value="${env.PATH}" />
+				<arg value="@{command}" />
+				<args />
+			</exec>
+		</sequential>
+	</macrodef>
 
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
@@ -102,4 +118,27 @@
 
 	</target>
 
+	<target name="git_commit">
+		<!--<input message="Username" addproperty="username" />
+		<input message="Password" addproperty="password" />-->
+		<input message="Commit message" addproperty="commit-message" />
+		<git command="add">
+			<args>
+				<arg value="-A" />
+			</args>
+		</git>
+		<git command="commit">
+			<args>
+				<arg value="-m ${commit-message}" />
+			</args>
+		</git>
+		<git command="push" />
+		<!--
+		<git command="push">
+			<args>
+				<arg value="https://${username}:${password}@github.com/liivur/Ryhm1.git" />
+			</args>
+		</git>
+		-->
+	</target>
 </project>
