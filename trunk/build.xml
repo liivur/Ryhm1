@@ -31,12 +31,21 @@
 		</fileset>
 	</path>
 
+	<<<<<<< HEAD
+
+
+
+	<!-- Definitions of runnable ant targets.
+         Run them from the command line by executing "ant [targetname]"  -->
+
+=======
 	
 	
 	
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
 	
+>>>>>>> d9fc77b4cb7a96086a0dcf2584307549ea61c055
 	<!--In order to activate debugging in the JVM you need to run your application with a specific flag. 
 	We will add this flag in our ANT script build.xml file. After the change, the run target will 
 	look like this:
@@ -44,67 +53,80 @@
 		<jvmarg value="-Xdebug" />
 		<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 	</java> -->
+		<<<<<<< HEAD
+
+	<target name="run" description="Run the application" depends="build">
+			<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
+				<jvmarg value="-Xdebug" />
+				<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+			</java>
+		</target>
+
+
+
+=======
 	
 	<target name="run" description="Run the application" depends="build">
-		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
-					<jvmarg value="-Xdebug" />
-					<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
-				</java>
-	</target>
+			<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
+				<jvmarg value="-Xdebug" />
+				<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+			</java>
+		</target>
 
 	
 	
+>>>>>>> d9fc77b4cb7a96086a0dcf2584307549ea61c055
 	<target name="build" description="Build the system" depends="clean">
-		<mkdir dir="${build.dir}" />
-		<mkdir dir="${build.classes.dir}" />
-		<javac srcdir="${src.dir}" destdir="${build.classes.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.7" source="1.7" includeAntRuntime="false">
-			<classpath refid="compile.classpath" />
-		</javac>
-	</target>
+			<mkdir dir="${build.dir}" />
+			<mkdir dir="${build.classes.dir}" />
+			<javac srcdir="${src.dir}" destdir="${build.classes.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.7" source="1.7" includeAntRuntime="false">
+				<classpath refid="compile.classpath" />
+			</javac>
+		</target>
 
-	<target name="dist" description="Build .jar file for distribution." depends="build, revision">
-		<jar destfile="${build.jar.dir}/ryhm1.jar" basedir="${build.classes.dir}">
-			<fileset dir="${basedir}" includes="*.properties" />
-			<zipgroupfileset dir="${basedir}/lib" includes="*.jar" />
-			<fileset dir="${assets.dir}" includes="*" />
-			<manifest>
-				<attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
-				<attribute name="Class-Path" value="*.jar" />
-				<attribute name="Implementation-Vendor" value="ryhm1" />
-				<attribute name="Implementation-Title" value="IntroUI" />
-				<attribute name="Implementation-Version" value="${build.number}" />
-			</manifest>
-		</jar>
-	</target>
+		<target name="dist" description="Build .jar file for distribution." depends="build, revision">
+			<jar destfile="${build.jar.dir}/ryhm1.jar" basedir="${build.classes.dir}">
+				<fileset dir="${basedir}" includes="*.properties" />
+				<zipgroupfileset dir="${basedir}/lib" includes="*.jar" />
+				<fileset dir="${assets.dir}" includes="*" />
+				<manifest>
+					<attribute name="Main-Class" value="ee.ut.math.tvt.ryhm1.Intro" />
+					<attribute name="Class-Path" value="*.jar" />
+					<attribute name="Implementation-Vendor" value="ryhm1" />
+					<attribute name="Implementation-Title" value="IntroUI" />
+					<attribute name="Implementation-Version" value="${build.number}" />
+				</manifest>
+			</jar>
+		</target>
 
-	<target name="revision" description="Increase the revision number and build number by 1 for every distribution">
-		<propertyfile file="version.properties" comment="Version properties">
-			<entry key="build.revision.number" type="int" operation="+" value="1" pattern="00" />
-		</propertyfile>
-		<property file="version.properties" prefix="new" />
-		<propertyfile file="version.properties" comment="Version properties">
-			<!-- build number and revision number should be increased separately -->
-			<entry key="build.number" operation="=" value="${new.build.major.number}.${new.build.minor.number}.${new.build.revision.number}" />
-		</propertyfile>
-	</target>
+		<target name="revision" description="Increase the revision number and build number by 1 for every distribution">
+			<propertyfile file="version.properties" comment="Version properties">
+				<entry key="build.revision.number" type="int" operation="+" value="1" pattern="00" />
+			</propertyfile>
+			<property file="version.properties" prefix="new" />
+			<propertyfile file="version.properties" comment="Version properties">
+				<!-- build number and revision number should be increased separately -->
+				<entry key="build.number" operation="=" value="${new.build.major.number}.${new.build.minor.number}.${new.build.revision.number}" />
+			</propertyfile>
+		</target>
 
-	<target name="jrun" description="Run the built jar file." depends="dist">
-		<java jar="${build.jar.dir}/ryhm1.jar" fork="true" />
-	</target>
+		<target name="jrun" description="Run the built jar file." depends="dist">
+			<java jar="${build.jar.dir}/ryhm1.jar" fork="true" />
+		</target>
 
-	<!--In order to run your application in console you need to create a new target runc:-->
-	<target name="runc" depends="build" description="Run the application (console)">
-		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
-			<arg value="console" />
-		</java>
-	</target>
+		<!--In order to run your application in console you need to create a new target runc:-->
+		<target name="runc" depends="build" description="Run the application (console)">
+			<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
+				<arg value="console" />
+			</java>
+		</target>
 
 
 
-	<!-- Clean up build system results -->
-	<target name="clean" description="Clean up build system results">
-		<delete dir="${build.dir}" />
+		<!-- Clean up build system results -->
+		<target name="clean" description="Clean up build system results">
+			<delete dir="${build.dir}" />
 
-	</target>
+		</target>
 
-</project>
+	</project>
