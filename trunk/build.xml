@@ -33,6 +33,17 @@
 
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
+
+	<!--In order to activate debugging in the JVM you need to run your application with a specific flag. We will add this flag in our ANT script build.xml file. After the change, the run target will look like this:
+
+	       <java
+	          classname="ee.ut.math.tvt.[team].Intro"
+	            classpathref="run.classpath"
+	            fork="yes">
+	          <jvmarg value="-Xdebug" />
+	          <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+	        </java>-->
+
 	<target name="run" description="Run the application" depends="build">
 		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
 			<jvmarg value="-Xdebug" />
@@ -84,11 +95,6 @@
 			<arg value="console" />
 		</java>
 	</target>
-
-
-
-
-
 
 	<!-- Clean up build system results -->
 	<target name="clean" description="Clean up build system results">
