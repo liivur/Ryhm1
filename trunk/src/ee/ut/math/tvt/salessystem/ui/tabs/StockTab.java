@@ -1,22 +1,37 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.MouseInfo;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class StockTab {
 
   private JButton addItem;
-
+  private static final Logger log = LogManager.getLogger(StockTab.class);
   private SalesSystemModel model;
 
   public StockTab(SalesSystemModel model) {
@@ -59,6 +74,136 @@ public class StockTab {
     gc.weightx = 0;
 
     addItem = new JButton("Add");
+    addItem.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		final JFrame addProductWindow = new JFrame("Add new product");
+    		JPanel infoPanel = new JPanel(new GridBagLayout());
+    		infoPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+    		GridBagConstraints panelConstraints = new GridBagConstraints();
+    		panelConstraints.weighty = 0;
+    		
+    		//ID väli
+    		panelConstraints.weightx = 0;
+    		panelConstraints.gridx = 0;
+    		panelConstraints.gridy = 0;
+    		panelConstraints.fill = GridBagConstraints.HORIZONTAL;
+    		JLabel idLabel = new JLabel("ID: ");
+    		infoPanel.add(idLabel,panelConstraints);
+    		
+    		panelConstraints.weightx = 1;
+    		panelConstraints.gridx = 1;
+    		panelConstraints.gridy = 0;
+    		final JTextField idField = new JTextField(15);
+    		infoPanel.add(idField,panelConstraints);
+    		
+    		//Nime väli
+    		panelConstraints.weightx = 0;
+    		panelConstraints.gridx = 0;
+    		panelConstraints.gridy = 1;
+    		JLabel nameLabel = new JLabel("Name: ");
+    		infoPanel.add(nameLabel,panelConstraints);    		
+    		
+    		panelConstraints.weightx = 1;
+    		panelConstraints.gridx = 1;
+    		panelConstraints.gridy = 1;
+    		final JTextField nameField = new JTextField(15);
+    		infoPanel.add(nameField,panelConstraints);
+    		
+    		//Hinna väli
+    		panelConstraints.weightx = 0;
+    		panelConstraints.gridx = 0;
+    		panelConstraints.gridy = 2;
+    		JLabel priceLabel = new JLabel("Price: ");
+    		infoPanel.add(priceLabel,panelConstraints);    		
+    		
+    		panelConstraints.weightx = 1;
+    		panelConstraints.gridx = 1;
+    		panelConstraints.gridy = 2;
+    		final JTextField priceField = new JTextField(15);
+    		infoPanel.add(priceField,panelConstraints);
+    		
+    		//Kirjelduse väli
+    		panelConstraints.weightx = 0;
+    		panelConstraints.gridx = 0;
+    		panelConstraints.gridy = 3;
+    		JLabel descLabel = new JLabel("Description: ");
+    		infoPanel.add(descLabel,panelConstraints);    		
+    		
+    		panelConstraints.weightx = 1;
+    		panelConstraints.gridx = 1;
+    		panelConstraints.gridy = 3;
+    		final JTextField descField = new JTextField(15);
+    		infoPanel.add(descField,panelConstraints);
+    		
+    		//Koguse väli
+    		panelConstraints.weightx = 0;
+    		panelConstraints.gridx = 0;
+    		panelConstraints.gridy = 4;
+    		JLabel qtyLabel = new JLabel("Quantity: ");
+    		infoPanel.add(qtyLabel,panelConstraints);    		
+    		
+    		panelConstraints.weightx = 1;
+    		panelConstraints.gridx = 1;
+    		panelConstraints.gridy = 4;
+    		final JTextField qtyField = new JTextField(15);
+    		infoPanel.add(qtyField,panelConstraints);   
+    		
+    		//Cancel nupp
+    		panelConstraints.weightx = 0;
+    		panelConstraints.gridx = 0;
+    		panelConstraints.gridy = 5;
+    		JButton cancelButton = new JButton("Cancel");
+    		infoPanel.add(cancelButton,panelConstraints);
+    		cancelButton.addActionListener(new ActionListener(){
+    			public void actionPerformed(ActionEvent e){
+    				addProductWindow.setVisible(false);
+    				addProductWindow.dispose();
+    				
+    			}
+    		});
+    		
+    		//Lisamise nupp
+    		panelConstraints.gridx = 1;
+    		panelConstraints.gridy = 5;
+    		JButton addingButton = new JButton("Add Product");
+    		infoPanel.add(addingButton,panelConstraints);
+    		
+    		//Toote lisamine
+    		addingButton.addActionListener(new ActionListener(){
+    			public void actionPerformed(ActionEvent e){
+    				StockItem product;
+    				try{
+    				Long productID = Long.parseLong(idField.getText());
+    				String productName = nameField.getText();
+    				double productPrice = Double.parseDouble(priceField.getText());
+    				String productDescription = descField.getText();
+    				if(qtyField.getText()==null){
+    					product = new StockItem(productID,productName,productDescription,productPrice);
+    				}
+    				else{
+    					int productQuantity = Integer.parseInt(qtyField.getText());
+    					product = new StockItem(productID,productName,productDescription,productPrice,productQuantity);
+    				}
+    				model.getWarehouseTableModel().addItem(product);
+    				addProductWindow.setVisible(false);
+    				addProductWindow.dispose();
+    				}
+    				catch(Exception except){
+    					log.debug("Error parsing product info upon adding.");
+    					JOptionPane.showMessageDialog(null,"Please double-check the information!","Error",JOptionPane.ERROR_MESSAGE);
+    				}
+
+    			}
+    		});
+    		addProductWindow.getContentPane().add(infoPanel);
+    		addProductWindow.pack();
+    		addProductWindow.setVisible(true);
+    		addProductWindow.setLocation(MouseInfo.getPointerInfo().getLocation());
+    		addProductWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    		
+    	}
+    });
     gc.gridwidth = GridBagConstraints.RELATIVE;
     gc.weightx = 1.0;
     panel.add(addItem, gc);
