@@ -28,3 +28,35 @@
 2014-10-21 12:41:33,105 INFO e.u.m.t.r.Intro [main] Intro initialized 
 2014-10-21 12:41:33,166 INFO e.u.m.t.r.IntroUI [main] UI initialized 
 2014-10-21 12:41:33,186 INFO e.u.m.t.r.IntroUI [main] Window creation completed 
+2014-10-26 17:00:54,176 INFO e.u.m.t.r.Intro [main] Intro initialized 
+2014-10-26 17:00:54,290 INFO e.u.m.t.r.IntroUI [main] UI initialized 
+2014-10-26 17:00:54,351 INFO e.u.m.t.r.IntroUI [main] Window creation completed 
+2014-10-26 17:01:37,478 INFO e.u.m.t.r.Intro [main] Intro initialized 
+2014-10-26 17:01:37,529 INFO e.u.m.t.r.IntroUI [main] UI initialized 
+2014-10-26 17:01:37,607 INFO e.u.m.t.r.IntroUI [main] Window creation completed 
+2014-10-26 17:02:09,422 INFO e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] New sale process started 
+2014-10-26 17:02:17,414 INFO e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] Sale complete 
+2014-10-26 17:02:17,414 DEBUG e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] Contents of the current basket:
+Id	Name	Price	Quantity	
+ 
+2014-10-26 17:02:17,415 ERROR e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] Underaged! 
+2014-10-26 17:02:17,991 INFO e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] Sale cancelled 
+2014-10-26 17:02:20,924 INFO e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] New sale process started 
+2014-10-26 17:02:32,444 INFO e.u.m.t.r.Intro [main] Intro initialized 
+2014-10-26 17:02:32,497 INFO e.u.m.t.r.IntroUI [main] UI initialized 
+2014-10-26 17:02:32,535 INFO e.u.m.t.r.IntroUI [main] Window creation completed 
+2014-10-26 17:02:52,808 INFO e.u.m.t.r.Intro [main] Intro initialized 
+2014-10-26 17:02:52,967 INFO e.u.m.t.r.IntroUI [main] UI initialized 
+2014-10-26 17:02:53,021 INFO e.u.m.t.r.IntroUI [main] Window creation completed 
+2014-10-26 17:06:43,453 INFO e.u.m.t.r.Intro [main] Intro initialized 
+2014-10-26 17:06:43,681 INFO e.u.m.t.r.IntroUI [main] UI initialized 
+2014-10-26 17:06:43,739 INFO e.u.m.t.r.IntroUI [main] Window creation completed 
+2014-10-26 17:06:50,489 INFO e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] New sale process started 
+2014-10-26 17:07:04,248 DEBUG e.u.m.t.s.u.m.PurchaseInfoTableModel [AWT-EventQueue-0] Added Chupa-chups quantity of 1 
+2014-10-26 17:07:11,408 DEBUG e.u.m.t.s.u.m.PurchaseInfoTableModel [AWT-EventQueue-0] Added Free Beer quantity of 1 
+2014-10-26 17:07:13,118 INFO e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] Sale complete 
+2014-10-26 17:07:13,118 DEBUG e.u.m.t.s.u.t.PurchaseTab [AWT-EventQueue-0] Contents of the current basket:
+Id	Name	Price	Quantity	
+null	Chupa-chups	8.0	1	8.0	
+null	Free Beer	0.0	1	0.0	
+ 

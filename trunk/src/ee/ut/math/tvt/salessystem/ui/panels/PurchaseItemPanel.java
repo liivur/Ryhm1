@@ -82,7 +82,7 @@ public class PurchaseItemPanel extends JPanel {
 
 		// Create the panel
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(7, 3));// Nii tuli mõistlik paigutus
+		panel.setLayout(new GridLayout(7, 3));// Nii tuli m6istlik paigutus
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
 		// Loome "dropdown" valikud
@@ -96,7 +96,7 @@ public class PurchaseItemPanel extends JPanel {
 		priceField = new JTextField();
 		// T2idame nyyd laohoonest saadavate toodetega oma "kohvri"
 		itemTrunk = model.getDomainController().loadWarehouseState();
-		// K2ime "kohvri" läbi, lisame rippmenuusse tooteid
+		// K2ime "kohvri" l2bi, lisame rippmenuusse tooteid
 		for (StockItem item : itemTrunk) {
 			dropDownMenu.addItem(item.getName());
 		}
