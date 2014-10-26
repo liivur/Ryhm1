@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.ui.WindowForPay;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
@@ -25,11 +26,13 @@ import org.apache.logging.log4j.Logger;
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "Point-of-sale" in the menu).
  */
-public class PurchaseTab {
+public class PurchaseTab implements ActionListener {
 
   private static final Logger log = LogManager.getLogger(PurchaseTab.class);
 //  private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
+  
+  private WindowForPay payWin;
   private final SalesDomainController domainController;
 
   private JButton newPurchase;
@@ -151,6 +154,7 @@ public class PurchaseTab {
     try {
       domainController.startNewPurchase();
       startNewSale();
+         
     } catch (VerificationFailedException e1) {
       log.error(e1.getMessage());
     }
@@ -178,6 +182,9 @@ public class PurchaseTab {
       domainController.submitCurrentPurchase(
           model.getCurrentPurchaseTableModel().getTableRows()
       );
+      
+      payWin = new WindowForPay(model.getCurrentPurchaseTableModel(), this);
+      
       endSale();
       model.getCurrentPurchaseTableModel().clear();
     } catch (VerificationFailedException e1) {
@@ -256,5 +263,24 @@ public class PurchaseTab {
 
     return gc;
   }
+
+
+@Override
+public void actionPerformed(ActionEvent arg0) {
+	if (arg0.getID() == 0) { //Successful sale
+		
+		//TODO! Sander 
+		//NB!If the payment is accepted then order should be accepted and saved. 
+		//If the payment is canceled, then the screen should be closed/hided and the 
+		//shopping cart should restore the state when it was left. 
+		
+		model.getCurrentPurchaseTableModel().clear();
+		endSale();
+		payWin.exit();
+	} else if (arg0.getID() == 1) {//Unsuccessful sale
+		payWin.exit();
+	}
+	
+}
 
 }
