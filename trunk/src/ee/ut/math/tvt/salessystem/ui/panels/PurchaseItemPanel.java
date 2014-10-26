@@ -3,6 +3,10 @@ package ee.ut.math.tvt.salessystem.ui.panels;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -15,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,6 +29,7 @@ import javax.swing.JTextField;
  * Purchase pane + shopping cart tabel UI.
  */
 public class PurchaseItemPanel extends JPanel {
+    private static final Logger log = LogManager.getLogger(PurchaseItemPanel.class);
 
     private static final long serialVersionUID = 1L;
 
@@ -40,9 +46,8 @@ public class PurchaseItemPanel extends JPanel {
 
     /**
      * Constructs new purchase item panel.
-     * 
-     * @param model
-     *            composite model of the warehouse and the shopping cart.
+     *
+     * @param model composite model of the warehouse and the shopping cart.
      */
     public PurchaseItemPanel(SalesSystemModel model) {
         this.model = model;
@@ -167,11 +172,20 @@ public class PurchaseItemPanel extends JPanel {
             int quantity;
             try {
                 quantity = Integer.parseInt(quantityField.getText());
+                if (quantity < 0 || quantity != Math.round(quantity)) {
+                    throw new NumberFormatException();
+                } else if (stockItem.getQuantity() < quantity) {
+                    JOptionPane.showMessageDialog(this, "There is not enough " +
+                            stockItem.getName() + " in the Warehouse");
+                } else {
+                    model.getCurrentPurchaseTableModel()
+                            .addItem(new SoldItem(stockItem, quantity));
+                    stockItem.setQuantity(stockItem.getQuantity() - quantity);
+                }
             } catch (NumberFormatException ex) {
-                quantity = 1;
+                log.warn("Quantity must be positive integer");
+                JOptionPane.showMessageDialog(this, "Quantity must be positive integer");
             }
-            model.getCurrentPurchaseTableModel()
-                .addItem(new SoldItem(stockItem, quantity));
         }
     }
 
