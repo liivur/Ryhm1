@@ -83,7 +83,7 @@ public class StockTab {
     		GridBagConstraints panelConstraints = new GridBagConstraints();
     		panelConstraints.weighty = 0;
     		
-    		//ID väli
+    		//ID v2li
     		panelConstraints.weightx = 0;
     		panelConstraints.gridx = 0;
     		panelConstraints.gridy = 0;
@@ -97,7 +97,7 @@ public class StockTab {
     		final JTextField idField = new JTextField(15);
     		infoPanel.add(idField,panelConstraints);
     		
-    		//Nime väli
+    		//Nime v2li
     		panelConstraints.weightx = 0;
     		panelConstraints.gridx = 0;
     		panelConstraints.gridy = 1;
@@ -110,7 +110,7 @@ public class StockTab {
     		final JTextField nameField = new JTextField(15);
     		infoPanel.add(nameField,panelConstraints);
     		
-    		//Hinna väli
+    		//Hinna v2li
     		panelConstraints.weightx = 0;
     		panelConstraints.gridx = 0;
     		panelConstraints.gridy = 2;
@@ -123,7 +123,7 @@ public class StockTab {
     		final JTextField priceField = new JTextField(15);
     		infoPanel.add(priceField,panelConstraints);
     		
-    		//Kirjelduse väli
+    		//Kirjelduse v2li
     		panelConstraints.weightx = 0;
     		panelConstraints.gridx = 0;
     		panelConstraints.gridy = 3;
@@ -136,7 +136,7 @@ public class StockTab {
     		final JTextField descField = new JTextField(15);
     		infoPanel.add(descField,panelConstraints);
     		
-    		//Koguse väli
+    		//Koguse v2li
     		panelConstraints.weightx = 0;
     		panelConstraints.gridx = 0;
     		panelConstraints.gridy = 4;
@@ -213,7 +213,7 @@ public class StockTab {
   }
 
 
-  // table of the wareshouse stock
+  // table of the warehouse stock
   private Component drawStockMainPane() {
     JPanel panel = new JPanel();
 
