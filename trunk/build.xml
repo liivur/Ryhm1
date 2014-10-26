@@ -124,6 +124,27 @@
 		</exec>
 	</target>
 
+	<!--VASTSÜNIDNUD GIT_TAG (Vastsündinule antakse nimi ka siin)-->
+	<target name="git_tag" description="Making a tag in github cannot be more simple than that">
+		<input message="Please give a name for the tag: " addproperty="nameMyTag" />
+		<input message="Your message please: " addproperty="tagMessage" />
+		<input message="Username" addproperty="username" />
+		<input message="Password" addproperty="password" />
+		<echo message="New tag is being made with name ${nameMyTag} and the delivered message: ${tagMessage}" />
+		<exec executable="git">
+			<arg value="tag" />
+			<arg value="-a" />
+			<arg value="${nameMyTag}" />
+			<arg value="-m" />
+			<arg value="${tagMessage}" />
+		</exec>
+		<exec executable="git">
+			<arg value="push" />
+			<arg value="https://${username}:${password}@github.com/liivur/Ryhm1.git" />
+			<arg value="--tags" />
+		</exec>
+	</target>
+
 	<!-- Definitions of macros 
 	<macrodef name="git">
 		<attribute name="command" />
