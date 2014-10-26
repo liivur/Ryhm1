@@ -4,6 +4,10 @@ import ee.ut.math.tvt.ryhm1.Intro;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -18,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,6 +35,7 @@ import org.apache.logging.log4j.Logger;
  * Purchase pane + shopping cart tabel UI.
  */
 public class PurchaseItemPanel extends JPanel {
+    private static final Logger log = LogManager.getLogger(PurchaseItemPanel.class);
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = LogManager.getLogger(Intro.class);
