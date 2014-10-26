@@ -171,6 +171,7 @@ public class StockTab {
 				addingButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						StockItem product;
+						boolean actionPerformed = false;
 						try {
 							Long productID = Long.parseLong(idField.getText());
 							String productName = nameField.getText();
@@ -198,6 +199,7 @@ public class StockTab {
 												"Duplicate ID found.",
 												JOptionPane.YES_NO_OPTION);
 								if (selectedOption == JOptionPane.YES_OPTION) {
+									actionPerformed = true;
 									model.getWarehouseTableModel()
 											.getItemById(productID)
 											.setName(productName);
@@ -218,11 +220,13 @@ public class StockTab {
 											.fireTableDataChanged();
 								}
 							} catch (NoSuchElementException elem) {
+								actionPerformed = true;
 								model.getWarehouseTableModel().addItem(product);
 							}
-
-							addProductWindow.setVisible(false);
-							addProductWindow.dispose();
+							if(actionPerformed){
+								addProductWindow.setVisible(false);
+								addProductWindow.dispose();
+							}
 						} catch (Exception except) {
 							log.debug("Error parsing product info upon adding.");
 							JOptionPane.showMessageDialog(null,
