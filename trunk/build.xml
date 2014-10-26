@@ -2,6 +2,7 @@
 <project basedir="." name="trunk" default="build">
 
 	<!-- Definitions of variables used during the rest of this script -->
+	<property environment="env" />
 	<property file="version.properties" />
 	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 	<property file="application.properties" />
@@ -31,21 +32,12 @@
 		</fileset>
 	</path>
 
+
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
-
-	<!--In order to activate debugging in the JVM you need to run your application with a specific flag. We will add this flag in our ANT script build.xml file. After the change, the run target will look like this:
-
-	       <java
-	          classname="ee.ut.math.tvt.[team].Intro"
-	            classpathref="run.classpath"
-	            fork="yes">
-	          <jvmarg value="-Xdebug" />
-	          <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
-	        </java>-->
-
 	<target name="run" description="Run the application" depends="build">
 		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
+            <!-- Activating debugger -->
 			<jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 		</java>
@@ -102,4 +94,44 @@
 
 	</target>
 
+	<!-- Git commit ant target -->
+	<target name="git_commit" description="It's Showtime: commit and push!">
+		<exec executable="git">
+			<arg value="add" />
+			<arg value="-A" />
+		</exec>
+		<input message="Your comments about this commit please: " addproperty="commitMessage" />
+		<echo message="Doing some commiting, the message is ${commitMessage}" />
+		<exec executable="git">
+			<arg value="commit" />
+			<arg value="-m ${commitMessage}" />
+		</exec>
+		<input message="Username:" addproperty="username" />
+		<input message="Password:" addproperty="password" />
+		<exec executable="git">
+			<arg value="push" />
+			<arg value="https://${username}:${password}@github.com/liivur/Ryhm1.git" />
+		</exec>
+	</target>
+
+	<!-- Git tag ant target -->
+	<target name="git_tag" description="Making a tag in github cannot be more simple than that">
+		<input message="Please give a name for the tag: " addproperty="nameMyTag" />
+		<input message="Your message please: " addproperty="tagMessage" />
+		<input message="Username" addproperty="username" />
+		<input message="Password" addproperty="password" />
+		<echo message="New tag is being made with name ${nameMyTag} and the delivered message: ${tagMessage}" />
+		<exec executable="git">
+			<arg value="tag" />
+			<arg value="-a" />
+			<arg value="${nameMyTag}" />
+			<arg value="-m" />
+			<arg value="${tagMessage}" />
+		</exec>
+		<exec executable="git">
+			<arg value="push" />
+			<arg value="https://${username}:${password}@github.com/liivur/Ryhm1.git" />
+			<arg value="--tags" />
+		</exec>
+	</target>
 </project>
