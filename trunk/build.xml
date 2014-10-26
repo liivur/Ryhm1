@@ -35,19 +35,9 @@
 
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
-
-	<!--In order to activate debugging in the JVM you need to run your application with a specific flag. We will add this flag in our ANT script build.xml file. After the change, the run target will look like this:
-
-	       <java
-	          classname="ee.ut.math.tvt.[team].Intro"
-	            classpathref="run.classpath"
-	            fork="yes">
-	          <jvmarg value="-Xdebug" />
-	          <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
-	        </java>-->
-
 	<target name="run" description="Run the application" depends="build">
 		<java classname="ee.ut.math.tvt.ryhm1.Intro" classpathref="run.classpath" fork="yes">
+            <!-- Activating debugger -->
 			<jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 		</java>
@@ -124,7 +114,7 @@
 		</exec>
 	</target>
 
-	<!--VASTSÜNIDNUD GIT_TAG (Vastsündinule antakse nimi ka siin)-->
+	<!--VASTSYIDNUD GIT_TAG (Vastsyndinule antakse nimi ka siin)-->
 	<target name="git_tag" description="Making a tag in github cannot be more simple than that">
 		<input message="Please give a name for the tag: " addproperty="nameMyTag" />
 		<input message="Your message please: " addproperty="tagMessage" />
@@ -144,47 +134,4 @@
 			<arg value="--tags" />
 		</exec>
 	</target>
-
-	<!-- Definitions of macros 
-	<macrodef name="git">
-		<attribute name="command" />
-		<attribute name="dir" default="${basedir}" />
-		<element name="args" optional="true" />
-		<sequential>
-			<echo message="git @{command}" />
-			<exec executable="git" dir="@{dir}" >
-				<env key="PATH" value="${env.PATH}" />
-				<arg value="@{command}" />
-				<args />
-			</exec>
-		</sequential>
-	</macrodef>
-	-->
-
-	<!--
-	<target name="git_commit">
-		<input message="Username" addproperty="username" />
-		<input message="Password" addproperty="password" />
-		<input message="Commit message" addproperty="commit-message" />
-		<git command="add">
-			<args>
-				<arg value="-A" />
-			</args>
-		</git>
-		<git command="commit">
-			<args>
-				<arg value="-m ${commit-message}" />
-			</args>
-		</git>
-		<git command="push" />
-		
-		<git command="push">
-			<args>
-				<arg value="https://${username}:${password}@github.com/liivur/Ryhm1.git" />
-			</args>
-		</git>
-	
-	</target>
-		-->
-
 </project>
