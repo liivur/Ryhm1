@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Logger;
 //import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-import ee.ut.math.tvt.ryhm1.Intro;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 
 /**
@@ -13,7 +12,7 @@ import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 public class SalesSystemModel {
     
 	private static final Logger log = LogManager.getLogger(SalesSystemModel.class);
-//    private static final Logger log = Logger.getLogger(SalesSystemModel.class);
+	//private static final Logger log = Logger.getLogger(SalesSystemModel.class);
 
     // Warehouse model
     private StockTableModel warehouseTableModel;
@@ -45,5 +44,10 @@ public class SalesSystemModel {
     public PurchaseInfoTableModel getCurrentPurchaseTableModel() {
         return currentPurchaseTableModel;
     }
+
+	public SalesDomainController getDomainController() {
+		return domainController;
+	}
+    
     
 }

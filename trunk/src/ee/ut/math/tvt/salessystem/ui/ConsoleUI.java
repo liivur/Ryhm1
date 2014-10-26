@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 //import org.apache.log4j.Logger;
 
 
-import ee.ut.math.tvt.ryhm1.Intro;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;

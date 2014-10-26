@@ -17,10 +17,11 @@ public interface SalesDomainController {
      * 
      * @return List of ${link
      *         ee.ut.math.tvt.salessystem.domain.data.StockItem}s.
+     *         
      */
+	
     public List<StockItem> loadWarehouseState();
-
-    // business processes
+    // business processes2
     /**
      * Initiate new business transaction - purchase of the goods.
      * 
@@ -36,7 +37,7 @@ public interface SalesDomainController {
     public void cancelCurrentPurchase() throws VerificationFailedException;
 
     /**
-     * Commit business transaction - purchsae of goods.
+     * Commit business transaction - purchase of goods.
      * 
      * @param goods
      *            Goods that the buyer has chosen to buy.
@@ -44,6 +45,8 @@ public interface SalesDomainController {
      */
     public void submitCurrentPurchase(List<SoldItem> goods)
             throws VerificationFailedException;
+
+	
 
     
 }
