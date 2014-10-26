@@ -94,7 +94,7 @@
 
 	</target>
 
-	<!-- UUS SANDRI VESRIOONIST ERINEV GIT_COMMIT-->
+	<!-- Git commit ant target -->
 	<target name="git_commit" description="It's Showtime: commit and push!">
 		<exec executable="git">
 			<arg value="add" />
@@ -114,7 +114,7 @@
 		</exec>
 	</target>
 
-	<!--VASTSYIDNUD GIT_TAG (Vastsyndinule antakse nimi ka siin)-->
+	<!-- Git tag ant target -->
 	<target name="git_tag" description="Making a tag in github cannot be more simple than that">
 		<input message="Please give a name for the tag: " addproperty="nameMyTag" />
 		<input message="Your message please: " addproperty="tagMessage" />
