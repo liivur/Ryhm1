@@ -197,20 +197,29 @@ public class PurchaseItemPanel extends JPanel {
 	/**
 	 * Add new item to the cart.
 	 */
-	public void addItemEventHandler() {
-		// add chosen item to the shopping cart.
-		StockItem stockItem = getStockItemByBarcode();
-		if (stockItem != null) {
-			int quantity;
-			try {
-				quantity = Integer.parseInt(quantityField.getText());
-			} catch (NumberFormatException ex) {
-				quantity = 1;
-			}
-			model.getCurrentPurchaseTableModel().addItem(
-					new SoldItem(stockItem, quantity));
-		}
-	}
+    public void addItemEventHandler() {
+        // add chosen item to the shopping cart.
+        StockItem stockItem = getStockItemByBarcode();
+        if (stockItem != null) {
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityField.getText());
+                if (quantity < 0 || quantity != Math.round(quantity)) {
+                    throw new NumberFormatException();
+                } else if (stockItem.getQuantity() < quantity) {
+                    JOptionPane.showMessageDialog(this, "There is not enough " +
+                            stockItem.getName() + " in the Warehouse");
+                } else {
+                    model.getCurrentPurchaseTableModel()
+                            .addItem(new SoldItem(stockItem, quantity));
+                    stockItem.setQuantity(stockItem.getQuantity() - quantity);
+                }
+            } catch (NumberFormatException ex) {
+                log.warn("Quantity must be positive integer");
+                JOptionPane.showMessageDialog(this, "Quantity must be positive integer");
+            }
+        }
+    }
 
 	/**
 	 * Sets whether or not this component is enabled.
