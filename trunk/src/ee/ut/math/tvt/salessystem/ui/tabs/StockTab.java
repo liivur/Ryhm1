@@ -177,6 +177,9 @@ public class StockTab {
     				Long productID = Long.parseLong(idField.getText());
     				String productName = nameField.getText();
     				double productPrice = Double.parseDouble(priceField.getText());
+    				if(productPrice < 0){
+    					throw new Exception();
+    				}
     				String productDescription = descField.getText();
     				if(qtyField.getText()==null){
     					product = new StockItem(productID,productName,productDescription,productPrice);
