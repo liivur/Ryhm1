@@ -38,7 +38,7 @@ public class PurchaseItemPanel extends JPanel {
     private static final Logger log = LogManager.getLogger(PurchaseItemPanel.class);
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LogManager.getLogger(Intro.class);
+	//private static final Logger log = LogManager.getLogger(Intro.class);
 	private JComboBox<String> dropDownMenu;// Loome "dropdown menu" muutuja
 	private List<StockItem> itemTrunk; // Kuskil vaja hoida tooteid
 	private JTextField barCodeField;// Text field on the dialogPane
