@@ -4,6 +4,7 @@ import ee.ut.math.tvt.ryhm1.Intro;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -35,10 +37,11 @@ import org.apache.logging.log4j.Logger;
  * Purchase pane + shopping cart tabel UI.
  */
 public class PurchaseItemPanel extends JPanel {
-    private static final Logger log = LogManager.getLogger(PurchaseItemPanel.class);
+	private static final Logger log = LogManager
+			.getLogger(PurchaseItemPanel.class);
 
 	private static final long serialVersionUID = 1L;
-	//private static final Logger log = LogManager.getLogger(Intro.class);
+	// private static final Logger log = LogManager.getLogger(Intro.class);
 	private JComboBox<String> dropDownMenu;// Loome "dropdown menu" muutuja
 	private List<StockItem> itemTrunk; // Kuskil vaja hoida tooteid
 	private JTextField barCodeField;// Text field on the dialogPane
@@ -47,6 +50,7 @@ public class PurchaseItemPanel extends JPanel {
 	private JTextField priceField;// Text field
 	private JButton addItemButton;
 	private SalesSystemModel model;// Warehouse model
+	private PurchaseTab purchaseTab;
 
 	/**
 	 * Constructs new purchase item panel.
@@ -54,8 +58,9 @@ public class PurchaseItemPanel extends JPanel {
 	 * @param model
 	 *            composite model of the warehouse and the shopping cart.
 	 */
-	public PurchaseItemPanel(SalesSystemModel model) {
+	public PurchaseItemPanel(SalesSystemModel model, PurchaseTab tab) {
 		this.model = model;
+		this.purchaseTab = tab;
 
 		setLayout(new GridBagLayout());
 
@@ -197,29 +202,33 @@ public class PurchaseItemPanel extends JPanel {
 	/**
 	 * Add new item to the cart.
 	 */
-    public void addItemEventHandler() {
-        // add chosen item to the shopping cart.
-        StockItem stockItem = getStockItemByBarcode();
-        if (stockItem != null) {
-            int quantity;
-            try {
-                quantity = Integer.parseInt(quantityField.getText());
-                if (quantity < 0 || quantity != Math.round(quantity)) {
-                    throw new NumberFormatException();
-                } else if (stockItem.getQuantity() < quantity) {
-                    JOptionPane.showMessageDialog(this, "There is not enough " +
-                            stockItem.getName() + " in the Warehouse");
-                } else {
-                    model.getCurrentPurchaseTableModel()
-                            .addItem(new SoldItem(stockItem, quantity));
-                    stockItem.setQuantity(stockItem.getQuantity() - quantity);
-                }
-            } catch (NumberFormatException ex) {
-                log.warn("Quantity must be positive integer");
-                JOptionPane.showMessageDialog(this, "Quantity must be positive integer");
-            }
-        }
-    }
+	public void addItemEventHandler() {
+		// add chosen item to the shopping cart.
+		StockItem stockItem = getStockItemByBarcode();
+		if (stockItem != null) {
+			int quantity;
+			try {
+				quantity = Integer.parseInt(quantityField.getText());
+				if (quantity < 0 || quantity != Math.round(quantity)) {
+					throw new NumberFormatException();
+				} else if (stockItem.getQuantity() < quantity) {
+					JOptionPane.showMessageDialog(this, "There is not enough "
+							+ stockItem.getName() + " in the Warehouse");
+				} else {
+					model.getCurrentPurchaseTableModel().addItem(
+							new SoldItem(stockItem, quantity));
+					if (purchaseTab.getPayWindow() != null) {
+						purchaseTab.getPayWindow().updateInfo();
+					}
+					stockItem.setQuantity(stockItem.getQuantity() - quantity);
+				}
+			} catch (NumberFormatException ex) {
+				log.warn("Quantity must be positive integer");
+				JOptionPane.showMessageDialog(this,
+						"Quantity must be positive integer");
+			}
+		}
+	}
 
 	/**
 	 * Sets whether or not this component is enabled.
