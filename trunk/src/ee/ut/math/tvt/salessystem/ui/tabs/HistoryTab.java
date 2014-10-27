@@ -80,6 +80,46 @@ public class HistoryTab {
 
         JTable table = new JTable(model.getCurrentHistoryTableModel());
 
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                final JFrame orderDetailWindow = new JFrame("Order details");
+                JPanel panel = new JPanel();
+
+                PurchaseInfoTableModel detail_model = new PurchaseInfoTableModel();
+                JTable details = new JTable(detail_model);
+
+                JTableHeader header = details.getTableHeader();
+                header.setReorderingAllowed(false);
+
+                JScrollPane scrollPane = new JScrollPane(details);
+
+                GridBagConstraints gc = new GridBagConstraints();
+                GridBagLayout gb = new GridBagLayout();
+                gc.fill = GridBagConstraints.BOTH;
+                gc.weightx = 1.0;
+                gc.weighty = 1.0;
+
+                details.setLayout(gb);
+                details.add(scrollPane, gc);
+
+                HistoryItem item = model.getCurrentHistoryTableModel().getItemById(listSelectionEvent.getFirstIndex());
+
+                for (SoldItem detail : item.getOrderDetails()) {
+                    detail_model.addItem(detail);
+                }
+
+                details.setBorder(BorderFactory.createTitledBorder("History status"));
+                orderDetailWindow.getContentPane().add(panel);
+                orderDetailWindow.pack();
+                orderDetailWindow.setVisible(true);
+                orderDetailWindow.setLocation(MouseInfo.getPointerInfo()
+                        .getLocation());
+                orderDetailWindow
+                        .setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+
         JTableHeader header = table.getTableHeader();
         header.setReorderingAllowed(false);
 
