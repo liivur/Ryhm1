@@ -192,6 +192,8 @@ public class StockTab {
 										productQuantity);
 							}
 							try {
+								model.getWarehouseTableModel()
+								.getItemById(productID);
 								int selectedOption = JOptionPane
 										.showConfirmDialog(
 												null,

@@ -250,6 +250,16 @@ public class PurchaseItemPanel extends JPanel {
 		nameField.setText("");
 		priceField.setText("");
 	}
+	
+	public void updateDropdown() {
+		dropDownMenu.removeAllItems();
+		dropDownMenu.addItem("");// Alguses tyhjus
+		
+		itemTrunk = model.getWarehouseTableModel().getTableRows();
+		for (StockItem item : itemTrunk) {
+			dropDownMenu.addItem(item.getName());
+		}
+	}
 
 	/*
 	 * === Ideally, UI's layout and behavior should be kept as separated as

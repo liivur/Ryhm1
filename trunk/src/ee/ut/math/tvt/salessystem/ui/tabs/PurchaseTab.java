@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -63,7 +64,7 @@ public class PurchaseTab implements ActionListener {
 	 */
 	public Component draw() {
 		JPanel panel = new JPanel();
-
+		
 		// Layout
 		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panel.setLayout(new GridBagLayout());
@@ -159,6 +160,9 @@ public class PurchaseTab implements ActionListener {
 	protected void cancelPurchaseButtonClicked() {
 		log.info("Sale cancelled");
 		try {
+			for (SoldItem soldItem : model.getCurrentPurchaseTableModel().getTableRows()) {
+				soldItem.getStockItem().setQuantity(soldItem.getStockItem().getQuantity() + soldItem.getQuantity());
+			}	
 			domainController.cancelCurrentPurchase();
 			endSale();
 			model.getCurrentPurchaseTableModel().clear();
@@ -293,6 +297,10 @@ public class PurchaseTab implements ActionListener {
 
 	public WindowForPay getPayWindow() {
 		return this.payWin;
+	}
+	
+	public PurchaseItemPanel getPurchasePanel() {
+		return this.purchasePane;
 	}
 
 }
