@@ -25,26 +25,26 @@ public class WindowForPay {
 	private JPanel panel;
 	private JTextField payedMoneyField;
 	private JTextField changeField;
+	private JTextField theSum;
 	private PurchaseInfoTableModel model;
 
-
-
-	public WindowForPay(PurchaseInfoTableModel model, ActionListener actListen) {
+	public WindowForPay(PurchaseInfoTableModel model,
+			final ActionListener actListen) {
 		this.model = model;
 		this.actListen = actListen;
 
-		sumItemCost = model.findSum();//Kogusumma
+		sumItemCost = model.findSum();// Kogusumma
 
-		frame = new JFrame("Pay");//P6hiaken
+		frame = new JFrame("Pay");// P6hiaken
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(4, 2));
 
-		//Paneme p6hiaknasse sisu.
+		// Paneme p6hiaknasse sisu.
 		panel.add(new JLabel("Customer payed:"));
 		payedMoneyField = new JTextField();
-		panel.add(payedMoneyField);	
+		panel.add(payedMoneyField);
 		panel.add(new JLabel("The Sum is:"));
-		JTextField theSum = new JTextField(String.valueOf(sumItemCost));
+		theSum = new JTextField(String.valueOf(sumItemCost));
 		theSum.setEditable(false);
 		panel.add(theSum);
 		panel.add(new JLabel("Change amount:"));
@@ -52,32 +52,34 @@ public class WindowForPay {
 		changeField.setEditable(false);
 		panel.add(changeField);
 
-		//Nupud 2 tk
+		// Nupud 2 tk
 		okButton = new JButton("Accept");
 		okButton.setEnabled(false);
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateInfo();
-				actListen.actionPerformed(new ActionEvent(this, 0, "ok purchase"));
+				actListen.actionPerformed(new ActionEvent(this, 0,
+						"ok purchase"));
 				log.debug("ok for the pay!");
 			}
 		});
-		
 
 		abortButton = new JButton("Cancel");
 		abortButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateInfo();
-				actListen.actionPerformed(new ActionEvent(this, 1, "abort purchase"));
+				actListen.actionPerformed(new ActionEvent(this, 1,
+						"abort purchase"));
+				System.out.println("Cancel");
 				log.debug("aborted paying!");
 			}
 		});
-		
-		//Lisamine
+
+		// Lisamine
 		panel.add(okButton);
 		panel.add(abortButton);
 
-		//Toimingute j2lgimine
+		// Toimingute j2lgimine
 		payedMoneyField.getDocument().addDocumentListener(
 				new DocumentListener() {
 
@@ -102,41 +104,50 @@ public class WindowForPay {
 		frame.add(panel);
 		frame.setLocation(300, 300);
 		frame.setVisible(true);
-		frame.pack();//Optimaalsed m66tmed aknale.
+		frame.pack();// Optimaalsed m66tmed aknale.
 	}
 
 	// Infouuendusmeetod
-		private void updateInfo() {
-			String comparison = payedMoneyField.getText();
-			if (!isNumeric(comparison)) {
-				changeField.setText("Error!");
-				okButton.setEnabled(false);
-				return;
-			}
-
-			if ((Double.parseDouble(payedMoneyField.getText()) - sumItemCost) >= 0) {
-				changeField.setText(String.valueOf(Double.parseDouble(payedMoneyField.getText()) - sumItemCost));
-				abortButton.setEnabled(true);
-				okButton.setEnabled(true);
-			} else {
-				changeField.setText("Nothing");
-				abortButton.setEnabled(true);
-				okButton.setEnabled(false);
-			}
-		}
-		
-		public void exit() {
-			frame.dispose();
+	public void updateInfo() {
+		sumItemCost = model.findSum();
+		this.theSum.setText(String.valueOf(sumItemCost));
+		String comparison = payedMoneyField.getText();
+		if (!isNumeric(comparison)) {
+			changeField.setText("Error!");
+			okButton.setEnabled(false);
+			return;
 		}
 
-		public static boolean isNumeric(String str) {
-			try {
-				double number = Double.parseDouble(str);
-			} catch (NumberFormatException ne) {
-				return false;
-			}
-			return true;
+		if ((Double.parseDouble(payedMoneyField.getText()) - sumItemCost) >= 0) {
+			changeField.setText(String.valueOf(Double
+					.parseDouble(payedMoneyField.getText()) - sumItemCost));
+			abortButton.setEnabled(true);
+			okButton.setEnabled(true);
+		} else {
+			changeField.setText("Nothing");
+			abortButton.setEnabled(true);
+			okButton.setEnabled(false);
 		}
+	}
+
+	public void exit() {
+		payedMoneyField.setText("0");
+		;
+		changeField.setText("0");
+		frame.dispose();
+	}
+
+	public static boolean isNumeric(String str) {
+		try {
+			double number = Double.parseDouble(str);
+		} catch (NumberFormatException ne) {
+			return false;
+		}
+		return true;
+	}
+
+	public JFrame getFrame() {
+		return this.frame;
+	}
+
 }
-
-
