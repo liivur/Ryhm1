@@ -78,15 +78,23 @@ public class HistoryTab {
     private Component drawHistoryMainPane() {
         JPanel panel = new JPanel();
 
-        JTable table = new JTable(model.getCurrentHistoryTableModel());
+        final JTable table = new JTable(model.getCurrentHistoryTableModel());
 
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        table.addMouseListener(new MouseListener() {
             @Override
-            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+            public void mouseClicked(MouseEvent mouseEvent) {
                 final JFrame orderDetailWindow = new JFrame("Order details");
                 JPanel panel = new JPanel();
 
                 PurchaseInfoTableModel detail_model = new PurchaseInfoTableModel();
+
+                HistoryItem item = model.getCurrentHistoryTableModel().
+                        getTableRows().get(table.getSelectedRow());
+
+                for (SoldItem detail : item.getOrderDetails()) {
+                    detail_model.addItem(detail);
+                }
+
                 JTable details = new JTable(detail_model);
 
                 JTableHeader header = details.getTableHeader();
@@ -100,14 +108,8 @@ public class HistoryTab {
                 gc.weightx = 1.0;
                 gc.weighty = 1.0;
 
-                details.setLayout(gb);
-                details.add(scrollPane, gc);
-
-                HistoryItem item = model.getCurrentHistoryTableModel().getItemById(listSelectionEvent.getFirstIndex());
-
-                for (SoldItem detail : item.getOrderDetails()) {
-                    detail_model.addItem(detail);
-                }
+                panel.setLayout(gb);
+                panel.add(scrollPane, gc);
 
                 details.setBorder(BorderFactory.createTitledBorder("History status"));
                 orderDetailWindow.getContentPane().add(panel);
@@ -117,6 +119,26 @@ public class HistoryTab {
                         .getLocation());
                 orderDetailWindow
                         .setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
             }
         });
 
