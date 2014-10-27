@@ -111,7 +111,6 @@ public class HistoryTab {
                 panel.setLayout(gb);
                 panel.add(scrollPane, gc);
 
-                details.setBorder(BorderFactory.createTitledBorder("History status"));
                 orderDetailWindow.getContentPane().add(panel);
                 orderDetailWindow.pack();
                 orderDetailWindow.setVisible(true);
