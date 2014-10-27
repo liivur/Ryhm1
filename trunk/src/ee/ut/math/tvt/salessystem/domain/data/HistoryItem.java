@@ -9,8 +9,15 @@ import java.util.List;
 public class HistoryItem implements Cloneable, DisplayableItem {
     private String date;
     private String time;
-    private double TotalPrice;
+    private double totalPrice;
     private List<SoldItem> orderDetails;
+
+    public HistoryItem(String date, String time, double totalPrice, List<SoldItem> orderDetails) {
+        this.date = date;
+        this.time = time;
+        this.totalPrice = totalPrice;
+        this.orderDetails = orderDetails;
+    }
 
     public String getDate() {
         return date;
@@ -29,11 +36,11 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     }
 
     public double getTotalPrice() {
-        return TotalPrice;
+        return totalPrice;
     }
 
     public void setTotalPrice(double totalPrice) {
-        TotalPrice = totalPrice;
+        this.totalPrice = totalPrice;
     }
 
     public List<SoldItem> getOrderDetails() {

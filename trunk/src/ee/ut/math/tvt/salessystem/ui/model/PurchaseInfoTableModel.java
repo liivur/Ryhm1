@@ -8,6 +8,9 @@ import ee.ut.math.tvt.ryhm1.Intro;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Purchase history details model.
  */
@@ -79,5 +82,15 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		}
 		return sumItemCost;
 	}
+
+    public List<SoldItem> getSoldItems() {
+        List<SoldItem> lst = new ArrayList<SoldItem>();
+
+        for (SoldItem item :this.getTableRows()) {
+            lst.add(item);
+        }
+
+        return lst;
+    }
     
 }

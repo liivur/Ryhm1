@@ -67,6 +67,7 @@ public class WindowForPay {
 				actListen.actionPerformed(new ActionEvent(this, 0,
 						"ok purchase"));
 				log.debug("ok for the pay!");
+
 			}
 		});
 

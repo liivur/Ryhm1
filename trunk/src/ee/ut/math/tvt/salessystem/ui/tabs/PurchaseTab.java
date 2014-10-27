@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.WindowForPay;
@@ -13,6 +15,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -243,26 +250,41 @@ public class PurchaseTab implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getID() == 0) { // Successful sale
-			// TODO! Sander
 			// NB!If the payment is accepted then order should be accepted and
 			// saved.
 			// If the payment is canceled, then the screen should be
 			// closed/hided and the
 			// shopping cart should restore the state when it was left.
+            Date today = new Date();
+            List<SoldItem> order = new ArrayList<>();
+            Double sum = 0.0;
 
-			log.info("Sale complete");
+            log.info("Sale complete");
 			try {
 				log.debug("Contents of the current basket:\n"
 						+ model.getCurrentPurchaseTableModel());
 				domainController.submitCurrentPurchase(model
 						.getCurrentPurchaseTableModel().getTableRows());
-				
+
+                order = model.getCurrentPurchaseTableModel().getSoldItems();
+                sum = model.getCurrentPurchaseTableModel().findSum();
+
 				endSale();
 				model.getCurrentPurchaseTableModel().clear();
 			} catch (VerificationFailedException e1) {
 				log.error(e1.getMessage());
 			}
 			payWin.exit();
+
+            // Add saved order to the history tab
+            DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+            HistoryItem saved_order = new HistoryItem(dateFormat.format(today),
+                                          timeFormat.format(today), sum, order);
+
+            model.getCurrentHistoryTableModel().addItem(saved_order);
+
 		} else if (arg0.getID() == 1) {// Unsuccessful sale
 			payWin.exit();
 		}
