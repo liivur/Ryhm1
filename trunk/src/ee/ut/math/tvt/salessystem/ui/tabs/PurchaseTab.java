@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.WindowForPay;
@@ -152,6 +153,9 @@ public class PurchaseTab implements ActionListener {
 	protected void cancelPurchaseButtonClicked() {
 		log.info("Sale cancelled");
 		try {
+			for (SoldItem soldItem : model.getCurrentPurchaseTableModel().getTableRows()) {
+				soldItem.getStockItem().setQuantity(soldItem.getStockItem().getQuantity() + soldItem.getQuantity());
+			}	
 			domainController.cancelCurrentPurchase();
 			endSale();
 			model.getCurrentPurchaseTableModel().clear();
