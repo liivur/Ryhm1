@@ -2,15 +2,21 @@ package ee.ut.math.tvt.salessystem.ui;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -118,9 +124,9 @@ public class WindowForPay {
 			return;
 		}
 
-		if ((Double.parseDouble(payedMoneyField.getText()) - sumItemCost) >= 0) {
-			changeField.setText(String.valueOf(Double
-					.parseDouble(payedMoneyField.getText()) - sumItemCost));
+		BigDecimal change = new BigDecimal(payedMoneyField.getText()).subtract(new BigDecimal(sumItemCost));
+		if (change.compareTo(BigDecimal.ZERO) >= 0) {
+			changeField.setText(change.setScale(2, RoundingMode.HALF_UP).toPlainString());
 			abortButton.setEnabled(true);
 			okButton.setEnabled(true);
 		} else {
