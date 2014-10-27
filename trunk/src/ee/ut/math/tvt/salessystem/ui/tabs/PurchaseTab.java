@@ -256,7 +256,7 @@ public class PurchaseTab implements ActionListener {
 						+ model.getCurrentPurchaseTableModel());
 				domainController.submitCurrentPurchase(model
 						.getCurrentPurchaseTableModel().getTableRows());
-
+				
 				endSale();
 				model.getCurrentPurchaseTableModel().clear();
 			} catch (VerificationFailedException e1) {
