@@ -56,7 +56,7 @@ public class PurchaseTab implements ActionListener {
 	 */
 	public Component draw() {
 		JPanel panel = new JPanel();
-
+		
 		// Layout
 		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panel.setLayout(new GridBagLayout());
@@ -271,6 +271,10 @@ public class PurchaseTab implements ActionListener {
 
 	public WindowForPay getPayWindow() {
 		return this.payWin;
+	}
+	
+	public PurchaseItemPanel getPurchasePanel() {
+		return this.purchasePane;
 	}
 
 }

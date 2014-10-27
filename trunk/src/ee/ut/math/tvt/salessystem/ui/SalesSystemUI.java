@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.logging.log4j.LogManager;
 //import org.apache.log4j.Logger;
@@ -84,12 +86,17 @@ public class SalesSystemUI extends JFrame {
   }
 
   private void drawWidgets() {
-    JTabbedPane tabbedPane = new JTabbedPane();
+    final JTabbedPane tabbedPane = new JTabbedPane();
 
     tabbedPane.add("Point-of-sale", purchaseTab.draw());
     tabbedPane.add("Warehouse", stockTab.draw());
     tabbedPane.add("History", historyTab.draw());
 
+    tabbedPane.addChangeListener(new ChangeListener() {
+    	public void stateChanged(ChangeEvent e) {
+    		purchaseTab.getPurchasePanel().updateDropdown();
+    	}
+    });
     getContentPane().add(tabbedPane);
   }
 
