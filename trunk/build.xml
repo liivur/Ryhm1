@@ -7,17 +7,30 @@
 	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 	<property file="application.properties" />
 
+	<property name="lib.dir" value="${basedir}/lib"/>
+
+	<!-- database variables -->
+	<property name="data.dir"	value="${basedir}/data"/>
+	<property name="db.file"	value="${data.dir}/POSdb"/>
+	<property name="db.alias"	value="POS"/>
+	<property name="db.url" 	value="jdbc:hsqldb:hsql://localhost/POS"/>
+	<property name="lib.hibernate.dir"   value="${lib.dir}/hibernate"/>
+	<!-- old variables -->
 	<property name="build.dir" value="${basedir}/build" />
 	<property name="assets.dir" value="${basedir}/etc" />
 	<property name="build.classes.dir" value="${build.dir}/classes" />
 	<property name="build.jar.dir" value="${build.dir}/jar" />
 	<property name="src.dir" value="${basedir}/src" />
+	
 
 	<!-- Definitions of classpath variants used for different tasks -->
 
 	<path id="compile.classpath">
 		<!--Defining a classpath to lib folder for compilation -->
 		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.hibernate.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
@@ -27,6 +40,7 @@
 		<pathelement location="${build.classes.dir}" />
 		<pathelement location="${basedir}" />
 		<pathelement location="${assets.dir}" />
+		<pathelement location="${lib.dir}" />
 		<fileset dir="lib">
 			<include name="*.jar" />
 		</fileset>
@@ -133,5 +147,24 @@
 			<arg value="https://${username}:${password}@github.com/liivur/Ryhm1.git" />
 			<arg value="--tags" />
 		</exec>
+	</target>
+	<target name="dbmanager" description="Start the HSQLDB manager">
+        <java
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            classpathref="run.classpath"
+            fork="yes"
+        >
+            <arg line="--user sa --url ${db.url}" />
+        </java>
+    </target>
+
+    <target name="startdb" description="Start the HSQLDB with the default params">
+        <java
+            classname="org.hsqldb.Server"
+            classpathref="run.classpath"
+            fork="yes"
+        >
+            <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
+        </java>
 	</target>
 </project>
