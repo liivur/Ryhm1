@@ -1,7 +1,9 @@
 *.class
 .settings/
 bin/
-trunk/data
+POSdb.tmp/
+POSdb.lck
+POSdb.properties
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
