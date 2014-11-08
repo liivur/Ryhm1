@@ -2,14 +2,29 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 /**
  * Orders history has date, time and total price of order fields.
  */
-
+@Entity
 public class HistoryItem implements Cloneable, DisplayableItem {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(name="DATE")
     private String date;
+	@Column(name="TIME")
     private String time;
+	@Column(name="TOTALPRICE")
     private double totalPrice;
+	@OneToMany(cascade=CascadeType.ALL)
     private List<SoldItem> orderDetails;
 
     public HistoryItem(String date, String time, double totalPrice, List<SoldItem> orderDetails) {
@@ -18,6 +33,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
         this.totalPrice = totalPrice;
         this.orderDetails = orderDetails;
     }
+    public HistoryItem(){}
 
     public String getDate() {
         return date;
