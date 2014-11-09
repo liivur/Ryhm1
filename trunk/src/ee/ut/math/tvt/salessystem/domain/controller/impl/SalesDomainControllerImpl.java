@@ -32,10 +32,15 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	@Override
 	public List<StockItem> loadWarehouseState() {
-		Query query = HibernateUtil.currentSession().createQuery("from StockItem");
+		Query query = HibernateUtil.currentSession().createQuery(
+				"from StockItem");
 		@SuppressWarnings("unchecked")
 		List<StockItem> dataset = query.list();
 		return dataset;
+	}
+
+	public void endSession() {
+		HibernateUtil.closeSession();
 	}
 
 }
