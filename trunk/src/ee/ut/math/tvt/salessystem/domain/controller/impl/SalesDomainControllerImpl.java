@@ -7,6 +7,7 @@ import org.hibernate.Query;
 
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
@@ -42,5 +43,17 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	public void endSession() {
 		HibernateUtil.closeSession();
 	}
+
+	//Loeb andmebaasist sisse ajaloo, mis sinna salvestatud. Kontrollida!
+	@Override
+	public List<HistoryItem> loadHistoryState() {
+		Query query = HibernateUtil.currentSession().createQuery(
+				"from HistoryItem");
+		@SuppressWarnings("unchecked")
+		List<HistoryItem> dataset = query.list();
+		return dataset;
+		
+	}
+
 
 }
