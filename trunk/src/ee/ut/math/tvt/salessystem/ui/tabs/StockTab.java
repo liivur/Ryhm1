@@ -172,6 +172,8 @@ public class StockTab {
 					public void actionPerformed(ActionEvent e) {
 						StockItem product;
 						boolean actionPerformed = false;
+						boolean quantityExists = false;
+						int productQuantity = 0;
 						try {
 							Long productID = Long.parseLong(idField.getText());
 							String productName = nameField.getText();
@@ -181,15 +183,10 @@ public class StockTab {
 								throw new Exception();
 							}
 							String productDescription = descField.getText();
-							if (qtyField.getText() == null) {
-								product = new StockItem(productID, productName,
-										productDescription, productPrice);
-							} else {
-								int productQuantity = Integer.parseInt(qtyField
+							if (qtyField.getText() != null) {
+								productQuantity = Integer.parseInt(qtyField
 										.getText());
-								product = new StockItem(productID, productName,
-										productDescription, productPrice,
-										productQuantity);
+								quantityExists = true;
 							}
 							try {
 								model.getWarehouseTableModel()
@@ -223,6 +220,12 @@ public class StockTab {
 								}
 							} catch (NoSuchElementException elem) {
 								actionPerformed = true;
+								if(quantityExists){
+									product = new StockItem(productID,productName,productDescription,productPrice,productQuantity);
+								}
+								else{
+									product = new StockItem(productID,productName,productDescription,productPrice);
+								}
 								model.getWarehouseTableModel().addItem(product);
 							}
 							if(actionPerformed){

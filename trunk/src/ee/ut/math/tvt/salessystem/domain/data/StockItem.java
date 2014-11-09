@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
+
 /**
  * Stock item. Corresponds to the Data Transfer Object design pattern.
  */
@@ -32,6 +34,7 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.name = name;
         this.description = desc;
         this.price = price;
+        writeToDB();
     }
     
     public StockItem(Long id, String name, String desc, double price, int quantity) {
@@ -40,6 +43,7 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.description = desc;
         this.price = price;
         this.quantity = quantity;
+        writeToDB();
     }
 
     /**
@@ -54,6 +58,7 @@ public class StockItem implements Cloneable, DisplayableItem {
 
     public void setDescription(String description) {
         this.description = description;
+        writeToDB();
     }
 
     public String getName() {
@@ -62,6 +67,7 @@ public class StockItem implements Cloneable, DisplayableItem {
 
     public void setName(String name) {
         this.name = name;
+        writeToDB();
     }
 
     public double getPrice() {
@@ -70,6 +76,7 @@ public class StockItem implements Cloneable, DisplayableItem {
 
     public void setPrice(double price) {
         this.price = price;
+        writeToDB();
     }
 
     public Long getId() {
@@ -78,6 +85,7 @@ public class StockItem implements Cloneable, DisplayableItem {
 
     public void setId(Long id) {
         this.id = id;
+        writeToDB();
     }
     
     public int getQuantity() {
@@ -86,6 +94,7 @@ public class StockItem implements Cloneable, DisplayableItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        writeToDB();
     }
 
     public String toString() {
@@ -112,6 +121,12 @@ public class StockItem implements Cloneable, DisplayableItem {
         StockItem item =
             new StockItem(getId(), getName(), getDescription(), getPrice(), getQuantity());
         return item;
+    }
+    
+    public void writeToDB(){
+    	HibernateUtil.currentSession().beginTransaction();
+    	HibernateUtil.currentSession().saveOrUpdate(this);
+    	HibernateUtil.currentSession().getTransaction().commit();
     }
 		
 }
