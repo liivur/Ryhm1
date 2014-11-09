@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.ryhm1;
 
+import java.util.logging.Level;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -15,7 +17,7 @@ public class Intro {
 	private static final String MODE = "console";
 
 	public static void main(String[] args) {
-
+		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 		final SalesDomainController domainController = new SalesDomainControllerImpl();
 
 		log.info("Intro initialized");
