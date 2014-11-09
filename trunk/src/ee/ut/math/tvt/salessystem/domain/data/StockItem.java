@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.domain.data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
@@ -10,6 +11,7 @@ import ee.ut.math.tvt.salessystem.util.HibernateUtil;
  * Stock item. Corresponds to the Data Transfer Object design pattern.
  */
 @Entity
+@Table(name = "STOCKITEM")
 public class StockItem implements Cloneable, DisplayableItem {
 	@Id
     private Long id;

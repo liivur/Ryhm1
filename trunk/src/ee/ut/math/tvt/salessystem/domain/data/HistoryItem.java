@@ -9,11 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * Orders history has date, time and total price of order fields.
  */
 @Entity
+@Table(name = "HISTORYITEM")
 public class HistoryItem implements Cloneable, DisplayableItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
