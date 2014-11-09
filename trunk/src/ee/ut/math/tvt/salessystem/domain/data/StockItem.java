@@ -84,6 +84,10 @@ public class StockItem implements Cloneable, DisplayableItem {
     }
 
     public void setId(Long id) {
+		StockItem test = (StockItem)HibernateUtil.currentSession().get(StockItem.class,this.id);
+		if(test!=null){
+			HibernateUtil.currentSession().delete(this);
+		}
         this.id = id;
         writeToDB();
     }
