@@ -109,9 +109,10 @@ public class ConsoleUI {
 
 		if (c[0].equals("h"))
 			printUsage();
-		else if (c[0].equals("q"))
+		else if (c[0].equals("q")){
+			dc.endSession();//Lisatud, seos domain.controller.impl-iga ja domain.controller-iga
 			System.exit(0);
-		else if (c[0].equals("w"))
+		}else if (c[0].equals("w"))
 			showStock(warehouse);
 		else if (c[0].equals("c"))
 			showStock(cart);
