@@ -80,6 +80,8 @@ public class SalesSystemUI extends JFrame {
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
+    	//application should end the database session before the exit (using SalesDomainController#endSession) 
+    	domainController.endSession();
         System.exit(0);
       }
     });
