@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
+
 /**
  * Orders history has date, time and total price of order fields.
  */
@@ -34,8 +36,15 @@ public class HistoryItem implements Cloneable, DisplayableItem {
         this.time = time;
         this.totalPrice = totalPrice;
         this.orderDetails = orderDetails;
+        writeToDB();
     }
     public HistoryItem(){}
+    
+    public void writeToDB() {
+    	HibernateUtil.currentSession().beginTransaction();
+    	HibernateUtil.currentSession().saveOrUpdate(this);
+    	HibernateUtil.currentSession().getTransaction().commit();
+    }
 
     public String getDate() {
         return date;
@@ -43,6 +52,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 
     public void setDate(String date) {
         this.date = date;
+        writeToDB();
     }
 
     public String getTime() {
@@ -51,6 +61,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 
     public void setTime(String time) {
         this.time = time;
+        writeToDB();
     }
 
     public double getTotalPrice() {
@@ -59,6 +70,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+        writeToDB();
     }
 
     public List<SoldItem> getOrderDetails() {
@@ -67,6 +79,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 
     public void setOrderDetails(List<SoldItem> orderDetails) {
         this.orderDetails = orderDetails;
+        writeToDB();
     }
 
     @Override
