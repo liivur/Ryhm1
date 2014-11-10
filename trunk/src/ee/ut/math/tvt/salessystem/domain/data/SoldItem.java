@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 
 /**
@@ -53,6 +54,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
     
     public void setName(String name) {
         this.name = name;
+        writeToDB();
+
     }
     
     public double getPrice() {
@@ -61,6 +64,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
     
     public void setPrice(double price) {
         this.price = price;
+        writeToDB();
     }
     
     public Integer getQuantity() {
@@ -69,6 +73,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
     
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+        writeToDB();
     }
 
     public double getSum() {
@@ -81,6 +86,12 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
     public void setStockItem(StockItem stockItem) {
         this.stockItem = stockItem;
+        writeToDB();
     }
-    
+
+    public void writeToDB(){
+        HibernateUtil.currentSession().beginTransaction();
+        HibernateUtil.currentSession().saveOrUpdate(this);
+        HibernateUtil.currentSession().getTransaction().commit();
+    }
 }
