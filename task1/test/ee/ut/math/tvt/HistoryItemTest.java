@@ -11,6 +11,9 @@ import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 public class HistoryItemTest {
 
 	PurchaseInfoTableModel model;
+	// Testandmed. NB! ALATI
+	// KONTROLLIDA, ET ANDMEBAAS TOOTAKS
+	// ENNE TESTI K2IVITAMIST
 	private SoldItem madeMoney1;
 	private Long id1 = new Long(12);
 	private String name1 = "Green";
@@ -24,6 +27,34 @@ public class HistoryItemTest {
 	private String desc2 = "Toblerone";
 	private double price2 = 13.0E0;
 	private int quantity2 = 4;
+
+	private SoldItem madeMoney3;
+	private Long id3 = new Long(14);
+	private String name3 = "Yellow";
+	private String desc3 = "Banana";
+	private double price3 = 3.0E0;
+	private int quantity3 = 8;
+
+	private SoldItem madeMoney4;
+	private Long id4 = new Long(15);
+	private String name4 = "Roasted";
+	private String desc4 = "Hazelnuts";
+	private double price4 = 26.0E0;
+	private int quantity4 = 4;
+
+	private SoldItem madeMoney5;
+	private Long id5 = new Long(16);
+	private String name5 = "250g";
+	private String desc5 = "Bacon";
+	private double price5 = 27.0E0;
+	private int quantity5 = 5;
+
+	private SoldItem madeMoney6;
+	private Long id6 = new Long(17);
+	private String name6 = "Talvine maius";
+	private String desc6 = "Verivorst";
+	private double price6 = 16.0E0;
+	private int quantity6 = 6;
 
 	@Before
 	public void setUp() {
@@ -65,7 +96,21 @@ public class HistoryItemTest {
 
 	@Test
 	public void testGetSumWithMultipleItems() {
-
+		madeMoney3 = new SoldItem(new StockItem(id3, name3, desc3, price3,
+				quantity3), 5);
+		madeMoney4 = new SoldItem(new StockItem(id4, name4, desc4, price4,
+				quantity4), 2);
+		madeMoney5 = new SoldItem(new StockItem(id5, name5, desc5, price5,
+				quantity5), 3);
+		madeMoney6 = new SoldItem(new StockItem(id6, name6, desc6, price6,
+				quantity6), 4);
+		model.addItem(madeMoney3);
+		model.addItem(madeMoney4);
+		model.addItem(madeMoney5);
+		model.addItem(madeMoney6);
+		assertEquals(
+				madeMoney3.getSum() + madeMoney4.getSum() + madeMoney5.getSum()
+						+ madeMoney6.getSum(), model.findSum(), 0.001);
 	}
 
 }
