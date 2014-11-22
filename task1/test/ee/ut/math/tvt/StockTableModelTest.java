@@ -1,6 +1,8 @@
 package ee.ut.math.tvt;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +16,8 @@ public class StockTableModelTest {
 	private StockTableModel stockModel;
 	private StockItem stockItem;
 	private StockItem testStockItem;
+	private StockItem stockOne;
+	private StockItem stockTwo;
 	private SalesDomainController domainController = new SalesDomainControllerImpl();
 
 	// Testandmed testGetSum() jaoks. NB! ALATI
@@ -26,10 +30,19 @@ public class StockTableModelTest {
 	private int quantityA = 3;
 
 	private Long idB = new Long(999);
-	private String nameB = "Salvest";
-	private String descB = "Hernesupp";
-	private double priceB = 30.0E0;
 	private int quantityB = 3;
+
+	private Long idC = new Long(19);
+	private String nameC = "Salvest";
+	private String descC = "Seljanka";
+	private double priceC = 30.0E0;
+	private int quantityC = 3;
+
+	private Long idD = new Long(20);
+	private String nameD = "30g";
+	private String descD = "Milka chocowafer";
+	private double priceD = 6.0E0;
+	private int quantityD = 7;
 
 	@Before
 	public void setUp() {
@@ -46,17 +59,34 @@ public class StockTableModelTest {
 	public void testValidateNameUniqueness() {
 		stockItem = new StockItem(idA, nameA, descA, priceA, quantityA);
 		testStockItem = new StockItem(idB, nameA, descA, priceA, quantityB);
-		int rows = stockModel.getRowCount();
+
 		stockModel.addItem(stockItem);
+		int rows = stockModel.getRowCount();
+		stockModel.addItem(testStockItem);
+
 		assertEquals(rows + 1, stockModel.getRowCount());
 		// Saime testitud, et lubatakse
 		// kahte sama nimega, kuid erineva ID-ga objekti lisada.
-		// EHK LISANDUS YKS RIDA. 
+		// EHK LISANDUS YKS RIDA.
 	}
 
 	@Test
 	public void testHasEnoughInStock() {
+		boolean hasEnoughInStock = true;
 
+		stockOne = new StockItem(idC, nameC, descC, priceC, quantityC);
+		stockTwo = new StockItem(idD, nameD, descD, priceD, quantityD);
+		stockModel.addItem(stockOne);
+		stockModel.addItem(stockTwo);
+		List<StockItem> items = stockModel.getTableRows();
+		for (StockItem st : items) {
+			System.out.println(st.getQuantity());
+			if (st.getQuantity() <= 0) {
+				hasEnoughInStock = false;
+				break;
+			}
+		}
+		assertTrue(hasEnoughInStock);
 	}
 
 	@Test
