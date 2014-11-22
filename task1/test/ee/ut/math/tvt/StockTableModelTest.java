@@ -53,7 +53,7 @@ public class StockTableModelTest {
 	// oleksid andmebaasi olelmite ID-d.
 	// V6ivad olemas olla kaks sama nimega, kuid
 	// erinevat kogust t2histavad tooted, millel on siis ka erinev ID.
-	// Antud juhul v6ib hernesuppi osta n‰iteks nii 0,5-liitrist
+	// Antud juhul v6ib hernesuppi osta n√§iteks nii 0,5-liitrist
 	// purki kui ka 1-liitrist purki.
 	@Test
 	public void testValidateNameUniqueness() {
@@ -80,7 +80,6 @@ public class StockTableModelTest {
 		stockModel.addItem(stockTwo);
 		List<StockItem> items = stockModel.getTableRows();
 		for (StockItem st : items) {
-			System.out.println(st.getQuantity());
 			if (st.getQuantity() <= 0) {
 				hasEnoughInStock = false;
 				break;
