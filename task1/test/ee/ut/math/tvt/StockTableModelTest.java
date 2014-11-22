@@ -18,6 +18,8 @@ public class StockTableModelTest {
 	private StockItem testStockItem;
 	private StockItem stockOne;
 	private StockItem stockTwo;
+	private StockItem stockThree;
+	
 	private SalesDomainController domainController = new SalesDomainControllerImpl();
 
 	// Testandmed testGetSum() jaoks. NB! ALATI
@@ -43,6 +45,12 @@ public class StockTableModelTest {
 	private String descD = "Milka chocowafer";
 	private double priceD = 6.0E0;
 	private int quantityD = 7;
+
+	private Long idE = new Long(8);
+	private String nameE = "just ice cream";
+	private String descE = "Ice-cream";
+	private double priceE = 5.0E0;
+	private int quantityE = 5;
 
 	@Before
 	public void setUp() {
@@ -90,7 +98,9 @@ public class StockTableModelTest {
 
 	@Test
 	public void testGetItemByIdWhenItemExists() {
-
+		stockThree = new StockItem(idE, nameE, descE, priceE, quantityE);
+		stockModel.addItem(stockThree);
+		assertEquals(stockModel.getItemById(8),stockThree);
 	}
 
 	@Test
