@@ -12,7 +12,7 @@ import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 public class SoldItemTest {
 
 	// Testandmed testGetSum() jaoks. NB! ALATI
-	// KONTROLLIDA, ET ANDMEBAAS T÷÷TAKS
+	// KONTROLLIDA, ET ANDMEBAAS TOOTAKS
 	private SoldItem dealMade;
 	private Long id1 = new Long(500);
 	private String name1 = "sander6";
@@ -22,7 +22,7 @@ public class SoldItemTest {
 	private int quantityControl = 5;
 
 	// Testandmed testGetSumWithZeroQuantity() jaoks. NB! ALATI
-	// KONTROLLIDA, ET ANDMEBAAS T÷÷TAKS
+	// KONTROLLIDA, ET ANDMEBAAS TOOTAKS
 	private SoldItem dealZero;
 	private Long id2 = new Long(4);
 	private String name2 = "soft drink";
