@@ -3,6 +3,7 @@ package ee.ut.math.tvt;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -103,9 +104,10 @@ public class StockTableModelTest {
 		assertEquals(stockModel.getItemById(8),stockThree);
 	}
 
-	@Test
+	@Test(expected=NoSuchElementException.class)
 	public void testGetItemByIdWhenThrowsException() {
-
+		StockItem stockItem = stockModel.getItemById(999999);		
+		assertTrue(stockItem == null);
 	}
 
 }
