@@ -52,11 +52,18 @@
 		</fileset>
 	</path>
 
-	<!--KONTROLLIDA! Testimiseks lisatud-->
+	<!--KONTROLLIDA! Testimiseks lisatud -->
 	<path id="test.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
+		<fileset dir="${lib.hibernate.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement location="${build.classes.dir}" />
+		<pathelement location="${basedir}" />
+		<pathelement location="${assets.dir}" />
+		<pathelement location="${lib.dir}" />
 		<pathelement path="${build.classes.dir}/" />
 		<pathelement path="${build.test.dir}/" />
 	</path>
