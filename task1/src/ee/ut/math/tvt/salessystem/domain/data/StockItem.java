@@ -122,10 +122,12 @@ public class StockItem implements Cloneable, DisplayableItem {
         }
     }
     
-    
+    // Tahame, et kardetud tegelasega, keda tuntakse kui UNIQUE,
+    // pahandusi ei tekiks, selleks peab kloonitud ID olema teistsugune
+    // olgu erinevus +50000
     public Object clone() {
         StockItem item =
-            new StockItem(getId(), getName(), getDescription(), getPrice(), getQuantity());
+            new StockItem(getId()+50000, getName(), getDescription(), getPrice(), getQuantity());
         return item;
     }
     
