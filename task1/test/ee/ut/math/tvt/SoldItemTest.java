@@ -16,8 +16,8 @@ public class SoldItemTest {
 	// ENNE TESTI K2IVITAMIST
 	private SoldItem dealMade;
 	private Long id1 = new Long(500);
-	private String name1 = "sander6";
-	private String desc1 = "testtest";
+	private String name1 = "testtest";
+	private String desc1 = "sander6";
 	private double price1 = 20.0E0;
 	private int quantity1 = 9;
 	private int quantityControl = 5;

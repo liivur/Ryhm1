@@ -12,8 +12,8 @@ public class StockItemTest {
 	// ENNE TESTI K2IVITAMIST
 	private StockItem stock1;
 	private Long id1 = new Long(100);
-	private String name1 = "sander2";
-	private String desc1 = "testtest";
+	private String name1 = "testtest";
+	private String desc1 = "sander2";
 	private double price1 = 20.0E0;
 	private int quantity1 = 9;
 
@@ -21,7 +21,7 @@ public class StockItemTest {
 	// KONTROLLIDA, ET ANDMEBAAS TOOTAKS
 	// ENNE TESTI K2IVITAMIST
 	private StockItem stock2;
-	private Long id2 = new Long(4);
+	private Long id2 = new Long(3);
 	private String name2 = "soft drink";
 	private String desc2 = "Coca-Cola";
 	private double price2 = 15.0E0;
