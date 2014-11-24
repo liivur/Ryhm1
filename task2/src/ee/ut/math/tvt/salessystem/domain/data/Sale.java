@@ -83,6 +83,17 @@ public class Sale implements DisplayableItem {
         item.setSale(this);
         soldItems.add(item);
     }
+    
+    public void addItem(StockItem item){
+    	for (SoldItem solditem: soldItems){
+    		if (solditem.getStockItem() == item){
+    			solditem.setQuantity(solditem.getQuantity()+1);
+    			return;
+    		}
+    	}
+    	soldItems.add(new SoldItem(item,1));
+    	return;
+    }
 
     public double getSum() {
         double sum = 0.0;
