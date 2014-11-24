@@ -49,9 +49,9 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     public List<Client> getAllClients() {
         List<Client> clients =
             session.createQuery("from Client").list();
-
+        
         log.info(clients.size() + " clients loaded from disk");
-
+        model.getClientTableModel().populateWithData(clients);
         return clients;
     }
 
