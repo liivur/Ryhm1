@@ -3,7 +3,11 @@ package ee.ut.math.tvt.salessystem.ui.model;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.Client;
 import ee.ut.math.tvt.salessystem.domain.data.Sale;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -46,6 +50,9 @@ public class SalesSystemModel {
         List<Sale> sales = domainController.getAllSales();
         purchaseHistoryTableModel.populateWithData(sales);
 
+    }
+    public SalesSystemModel(){
+    	this.currentSale = new Sale(new ArrayList<SoldItem>());
     }
 
     public StockTableModel getWarehouseTableModel() {

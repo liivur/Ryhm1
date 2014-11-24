@@ -23,6 +23,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
     public PurchaseInfoTableModel() {
         super(new String[] { "Id", "Name", "Price", "Quantity", "Sum"});
+        this.model = new SalesSystemModel();
     }
 
 	public PurchaseInfoTableModel(SalesSystemModel model) {
