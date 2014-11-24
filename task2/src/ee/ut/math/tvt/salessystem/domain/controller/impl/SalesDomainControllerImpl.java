@@ -125,7 +125,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     }
 
     public void startNewPurchase() {
-        // XXX - Start new purchase
+        model.getCurrentPurchaseTableModel().fireTableDataChanged();
         log.info("New purchase started");
     }
 
