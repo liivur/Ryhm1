@@ -84,14 +84,14 @@ public class Sale implements DisplayableItem {
         soldItems.add(item);
     }
     
-    public void addItem(StockItem item){
+    public void addItem(StockItem item,int quantity){
     	for (SoldItem solditem: soldItems){
     		if (solditem.getStockItem() == item){
-    			solditem.setQuantity(solditem.getQuantity()+1);
+    			solditem.setQuantity(solditem.getQuantity()+quantity);
     			return;
     		}
     	}
-    	soldItems.add(new SoldItem(item,1));
+    	soldItems.add(new SoldItem(item,quantity));
     	return;
     }
 
