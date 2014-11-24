@@ -128,7 +128,16 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
     }
     public List<SoldItem> getTableRows(){
-    	return new ArrayList<SoldItem>(model.getCurrentSale().getSoldItems());
+    	Sale currentSale = null;
+    	if(model!=null){
+    		currentSale = model.getCurrentSale();
+    	}
+    	if(currentSale==null){
+    		return new ArrayList<SoldItem>();
+    	}
+    	else{
+    		return new ArrayList<SoldItem>(currentSale.getSoldItems());
+    	}
     }
 
     public static PurchaseInfoTableModel getEmptyTable() {
