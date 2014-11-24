@@ -96,7 +96,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
         } else {
             validateQuantityInStock(soldItem.getStockItem(), soldItem.getQuantity());
-            this.getTableRows().add(soldItem);
+            model.getCurrentSale().addSoldItem(soldItem);
             log.debug("Added " + soldItem.getName()
                     + " quantity of " + soldItem.getQuantity());
         }
