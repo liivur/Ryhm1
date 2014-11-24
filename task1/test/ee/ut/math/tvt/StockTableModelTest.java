@@ -127,5 +127,4 @@ public class StockTableModelTest extends StockTableModel{
 		assertEquals(stockItem.getPrice(), getColumnValue(stockItem, 2));
 		assertEquals(stockItem.getQuantity(), getColumnValue(stockItem, 3));
 	}
-	
 }
