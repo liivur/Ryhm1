@@ -99,7 +99,9 @@ public class Sale implements DisplayableItem {
 	    			return;
 	    		}
 	    	}
-	    	soldItems.add(new SoldItem(item,quantity));
+	    	SoldItem lisatav = new SoldItem(item,quantity);
+	    	lisatav.setSale(this);
+	    	soldItems.add(lisatav);
 	    	item.setQuantity(item.getQuantity()-quantity);
     	}
 
