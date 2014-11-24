@@ -1,9 +1,17 @@
 package ee.ut.math.tvt;
 
 import static org.junit.Assert.assertEquals;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
@@ -55,6 +63,20 @@ public class HistoryItemTest {
 	private String desc6 = "Verivorst";
 	private double price6 = 16.0E0;
 	private int quantity6 = 6;
+	
+	private SoldItem madeMoney7;
+	private Long id7 = new Long(18);
+	private String name7 = "Maius";
+	private String desc7 = "Verivorst";
+	private double price7 = 16.0E0;
+	private int quantity7 = 2;
+	
+	private SoldItem madeMoney8;
+	private Long id8 = new Long(19);
+	private String name8 = "Talvines";
+	private String desc8 = "Verivorst";
+	private double price8 = 12.0E0;
+	private int quantity8 = 3;
 
 	@Before
 	public void setUp() {
@@ -111,6 +133,30 @@ public class HistoryItemTest {
 		assertEquals(
 				madeMoney3.getSum() + madeMoney4.getSum() + madeMoney5.getSum()
 						+ madeMoney6.getSum(), model.findSum(), 0.001);
+	}
+	
+	@Test
+	public void testOrderDetails() {
+		madeMoney7 = new SoldItem(new StockItem(id7, name7, desc7, price7,
+				quantity7), 3);
+		madeMoney8 = new SoldItem(new StockItem(id8, name8, desc8, price8,
+				quantity8), 4);
+		model.addItem(madeMoney7);
+		model.addItem(madeMoney8);
+		
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        Date today = new Date();
+        List<SoldItem> order = new ArrayList<>();
+        
+		order.add(madeMoney7);
+		order.add(madeMoney8);
+		
+		double sum = model.findSum();
+		
+    	HistoryItem history = new HistoryItem(dateFormat.format(today), 
+    			timeFormat.format(today), sum, order);
+    	assertEquals(order, history.getOrderDetails());
 	}
 
 }

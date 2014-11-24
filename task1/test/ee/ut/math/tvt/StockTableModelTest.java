@@ -13,7 +13,7 @@ import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerIm
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
-public class StockTableModelTest {
+public class StockTableModelTest extends StockTableModel{
 	private StockTableModel stockModel;
 	private StockItem stockItem;
 	private StockItem testStockItem;
@@ -53,6 +53,12 @@ public class StockTableModelTest {
 	private double priceE = 5.0E0;
 	private int quantityE = 5;
 
+	private Long idF = new Long(9);
+	private String nameF = "ice baby";
+	private String descF = "baby ice";
+	private double priceF = 7.0E0;
+	private int quantityF = 3;
+	
 	@Before
 	public void setUp() {
 		stockModel = new StockTableModel();
@@ -109,5 +115,17 @@ public class StockTableModelTest {
 		StockItem stockItem = stockModel.getItemById(999999);		
 		assertTrue(stockItem == null);
 	}
+	
+	@Test
+	public void testGetColumnValue() {
+		stockItem = new StockItem(idF, nameF, descF, priceF, quantityF);
 
+		stockModel.addItem(stockItem);
+		
+		assertEquals(stockItem.getId(), getColumnValue(stockItem, 0));
+		assertEquals(stockItem.getName(), getColumnValue(stockItem, 1));
+		assertEquals(stockItem.getPrice(), getColumnValue(stockItem, 2));
+		assertEquals(stockItem.getQuantity(), getColumnValue(stockItem, 3));
+	}
+	
 }

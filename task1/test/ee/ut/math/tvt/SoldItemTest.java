@@ -1,6 +1,6 @@
 package ee.ut.math.tvt;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -29,6 +29,13 @@ public class SoldItemTest {
 	private String desc2 = "Sprite";
 	private double price2 = 15.0E0;
 	private int quantity3 = 6;
+	
+	private SoldItem dealOne;
+	private Long id3 = new Long(5);
+	private String name3 = "soft drink";
+	private String desc3 = "Sprite";
+	private double price3 = 16.0E0;
+	private int quantity4 = 3;
 
 	@Test
 	public void testGetSum() {
@@ -44,5 +51,27 @@ public class SoldItemTest {
 				quantity3), 0);
 		assertEquals(dealZero.getSum(), price2 * 0, 0.0001);
 
+	}
+	
+	@Test
+	public void testPrice() {
+		StockItem stockItem = new StockItem(id3, name3, desc3, price3,
+				quantity3, false);
+		SoldItem item = new SoldItem(stockItem, 3, false);
+		
+		assertEquals(item.getPrice(), stockItem.getPrice(), 0.0001);
+		item.setPrice(98765);
+		assertEquals(98765, item.getPrice(), 0.0001);
+	}
+	
+	@Test
+	public void testQuantity() {
+		StockItem stockItem = new StockItem(id3, name3, desc3, price3,
+				quantity3, false);
+		SoldItem item = new SoldItem(stockItem, 3, false);
+		assertTrue(3 == item.getQuantity());
+		item.setQuantity(Integer.MAX_VALUE);
+		assertTrue(Integer.MAX_VALUE == item.getQuantity());
+		item.setQuantity(3);
 	}
 }

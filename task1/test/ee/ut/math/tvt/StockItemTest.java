@@ -29,7 +29,7 @@ public class StockItemTest {
 
 	@Test
 	public void testClone() {
-		stock2 = new StockItem(id2, name2, desc2, price2, quantity2);
+		stock2 = new StockItem(id2, name2, desc2, price2, quantity2, false);
 		StockItem cloneBobaFett = (StockItem) stock2.clone();
 		assertEquals(cloneBobaFett.getId().longValue(),
 				id2.longValue() + 50000, 0.0001);
@@ -42,7 +42,7 @@ public class StockItemTest {
 
 	@Test
 	public void testGetColumn() {
-		stock1 = new StockItem(id1, name1, desc1, price1, quantity1);
+		stock1 = new StockItem(id1, name1, desc1, price1, quantity1, false);
 		assertEquals(((Long) stock1.getColumn(0)).longValue(), id1.longValue(),
 				0.0001);
 		assertEquals(((String) stock1.getColumn(1)), name1);
@@ -50,5 +50,11 @@ public class StockItemTest {
 				price1, 0.0001);
 		assertEquals((((Integer) stock1.getColumn(3)).intValue()), quantity1,
 				0.0001);
+	}
+	
+	@Test
+	public void testToString() {
+		stock1 = new StockItem(id1, name1, desc1, price1, quantity1, false);
+		assertEquals(id1 + " " + name1 + " " + desc1 + " " + price1, stock1.toString());
 	}
 }
