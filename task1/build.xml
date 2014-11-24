@@ -22,6 +22,9 @@
 	<property name="build.jar.dir" value="${build.dir}/jar" />
 	<property name="src.dir" value="${basedir}/src" />
 	
+	<!--KONTROLLIDA! Testimiseks lisatud-->
+	<property name="build.test.dir" value="${build.dir}/test"/>
+	<property name="test.dir" value="${basedir}/test"/>
 
 	<!-- Definitions of classpath variants used for different tasks -->
 
@@ -49,7 +52,22 @@
 		</fileset>
 	</path>
 
-
+	<!--KONTROLLIDA! Testimiseks lisatud -->
+	<path id="test.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.hibernate.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement location="${build.classes.dir}" />
+		<pathelement location="${basedir}" />
+		<pathelement location="${assets.dir}" />
+		<pathelement location="${lib.dir}" />
+		<pathelement path="${build.classes.dir}/" />
+		<pathelement path="${build.test.dir}/" />
+	</path>
+	
 	<!-- Definitions of runnable ant targets.
          Run them from the command line by executing "ant [targetname]"  -->
 	<target name="run" description="Run the application" depends="build">
@@ -170,4 +188,28 @@
             <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
         </java>
 	</target>
+
+	<!--KONTROLLIDA! Testimiseks lisatud-->
+	<target name="build-tests" depends="build" description="Build the system">
+		<mkdir dir="${build.test.dir}" />
+		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}"
+			debug="true" debuglevel="lines,vars,source" encoding="utf-8"
+			compiler="modern" target="1.7" source="1.7" classpathref="compile.classpath">
+			<classpath>
+				<pathelement path="${build.classes.dir}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!--KONTROLLIDA! Testimiseks lisatud -->
+	<target name="test" depends="build-tests" description="Run the template application">
+		<junit>
+			<classpath refid="test.classpath" />
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${build.test.dir}" includes="**/*.class" />
+			</batchtest>
+		</junit>
+	</target>
+	
 </project>

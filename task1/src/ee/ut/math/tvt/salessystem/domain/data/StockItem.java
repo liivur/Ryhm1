@@ -48,6 +48,14 @@ public class StockItem implements Cloneable, DisplayableItem {
         writeToDB();
     }
 
+    public StockItem(Long id, String name, String desc, double price, int quantity, boolean noDb) {
+        this.id = id;
+        this.name = name;
+        this.description = desc;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     /**
      * Constructs new  <code>StockItem</code>.
      */
@@ -122,10 +130,12 @@ public class StockItem implements Cloneable, DisplayableItem {
         }
     }
     
-    
+    // Tahame, et kardetud tegelasega, keda tuntakse kui UNIQUE,
+    // pahandusi ei tekiks, selleks peab kloonitud ID olema teistsugune
+    // olgu erinevus +50000
     public Object clone() {
         StockItem item =
-            new StockItem(getId(), getName(), getDescription(), getPrice(), getQuantity());
+            new StockItem(getId()+50000, getName(), getDescription(), getPrice(), getQuantity());
         return item;
     }
     

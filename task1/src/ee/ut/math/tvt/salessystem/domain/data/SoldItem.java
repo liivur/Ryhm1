@@ -39,6 +39,13 @@ public class SoldItem implements Cloneable, DisplayableItem {
         writeToDB();
     }
     
+    public SoldItem(StockItem stockItem, int quantity, boolean noDb) {
+        this.stockItem = stockItem;
+        this.name = stockItem.getName();
+        this.price = stockItem.getPrice();
+        this.quantity = quantity;
+    }
+    
     
     public Long getId() {
         return id;
