@@ -20,7 +20,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 
     public SalesSystemTableModel(final String[] headers) {
         this.headers = headers;
-        rows = new ArrayList<T>();
     }
 
     /**
@@ -42,16 +41,16 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
     }
 
     public int getRowCount() {
-        return rows.size();
+        return this.getTableRows().size();
     }
 
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return getColumnValue(rows.get(rowIndex), columnIndex);
+        return getColumnValue(this.getTableRows().get(rowIndex), columnIndex);
     }
 
     // search for item with the specified id
     public T getItemById(final long id) {
-        for (final T item : rows) {
+        for (final T item : this.getTableRows()) {
             if (item.getId() == id)
                 return item;
         }
@@ -61,26 +60,26 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
     public abstract List<T> getTableRows();
 
     public void clear() {
-        rows = new ArrayList<T>();
+    	this.getTableRows().clear();
         fireTableDataChanged();
     }
 
     public void populateWithData(final List<T> data) {
-        rows.clear();
-        rows.addAll(data);
+    	this.getTableRows().clear();
+    	this.getTableRows().addAll(data);
     }
     
     public void addRow(T row) {
-        rows.add(row);
+    	this.getTableRows().add(row);
         fireTableDataChanged();
     }
     
     public T getRow(int index) {
-        return rows.get(index);
+        return this.getTableRows().get(index);
     }
     
     public List<T> getRows() {
-        return rows;
+        return this.getTableRows();
     }
     
 }
