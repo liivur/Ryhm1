@@ -27,13 +27,17 @@ public class SalesSystemModel {
     private ClientTableModel clientTableModel;
 
     private Sale currentSale;
+    
+    private SalesDomainController domainController;
 
-    /**
+    public SalesDomainController getDomainController() {
+		return domainController;
+	}
+	/**
      * Construct application model.
      * @param domainController Sales domain controller.
      */
     public SalesSystemModel(SalesDomainController domainController) {
-
         warehouseTableModel = new StockTableModel();
         currentPurchaseTableModel = new PurchaseInfoTableModel(this);
         purchaseHistoryTableModel = new PurchaseHistoryTableModel();
