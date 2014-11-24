@@ -6,6 +6,7 @@ import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -142,5 +143,11 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
     	model.getCurrentSale().setSoldItems(sale.getSoldItems());
         fireTableDataChanged();
     }
-
+    public void addRow(SoldItem row) {
+    	model.getCurrentSale().addSoldItem(row);
+        fireTableDataChanged();
+    }
+    public void populateWithData(final List<SoldItem> data) {
+    	model.getCurrentSale().setSoldItems(new HashSet<SoldItem>(data));
+    }
 }
