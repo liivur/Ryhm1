@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
 
 /**
  * Sale object. Contains client and sold items.
@@ -36,7 +39,12 @@ public class Sale implements DisplayableItem {
     /** Empty constructors are used by hibernate */
     public Sale() {
     }
-
+    
+    public Sale(Client client) {
+    	this.client = client;
+    	this.sellingTime = new Date();
+    	this.soldItems = new HashSet<SoldItem>();
+    }
     public Sale(List<SoldItem> goods) {
         this.soldItems = new HashSet<SoldItem>(goods);
         this.sellingTime = new Date();
@@ -77,6 +85,26 @@ public class Sale implements DisplayableItem {
     public void addSoldItem(SoldItem item) {
         item.setSale(this);
         soldItems.add(item);
+    }
+    
+    public void addItem (StockItem item,int quantity) throws SalesSystemException{
+    	if (item.getQuantity()<quantity){
+    		throw new SalesSystemException();
+    	}
+    	else{
+	    	for (SoldItem solditem: soldItems){
+	    		if (solditem.getStockItem() == item){
+	    			solditem.setQuantity(solditem.getQuantity()+quantity);
+	    			item.setQuantity(item.getQuantity()-quantity);
+	    			return;
+	    		}
+	    	}
+	    	SoldItem lisatav = new SoldItem(item,quantity);
+	    	lisatav.setSale(this);
+	    	soldItems.add(lisatav);
+	    	item.setQuantity(item.getQuantity()-quantity);
+    	}
+
     }
 
     public double getSum() {

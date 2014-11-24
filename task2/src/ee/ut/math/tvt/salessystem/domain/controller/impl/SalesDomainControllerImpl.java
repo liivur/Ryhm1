@@ -7,8 +7,11 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
+
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -49,9 +52,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     public List<Client> getAllClients() {
         List<Client> clients =
             session.createQuery("from Client").list();
-
+        
         log.info(clients.size() + " clients loaded from disk");
-
         return clients;
     }
 
@@ -63,40 +65,19 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     private StockItem getStockItem(long id) {
         return (StockItem) session.get(StockItem.class, id);
     }
-
-
-    public void submitCurrentPurchase(List<SoldItem> soldItems, Client currentClient) {
-
-        // Begin transaction
-        Transaction tx = session.beginTransaction();
-
-        // construct new sale object
-        Sale sale = new Sale(soldItems);
-        //sale.setId(null);
-        sale.setSellingTime(new Date());
-
-        // set client who made the sale
-        sale.setClient(currentClient);
-
-        // Reduce quantities of stockItems in warehouse
-        for (SoldItem item : soldItems) {
-            // Associate with current sale
-            item.setSale(sale);
-
-            StockItem stockItem = getStockItem(item.getStockItem().getId());
-            stockItem.setQuantity(stockItem.getQuantity() - item.getQuantity());
-            session.save(stockItem);
-        }
-
-        session.save(sale);
-
-        // end transaction
-        tx.commit();
-
-        model.getPurchaseHistoryTableModel().addRow(sale);
-
+    
+    public void registerSale(Sale sale){
+    	Transaction tx = session.beginTransaction();
+    	sale.setSellingTime(new Date());
+    	for(SoldItem solditem:sale.getSoldItems()){
+    		session.save(solditem.getStockItem());
+    	}
+    	///TODO:Siin voib olla kala - solditemi salvestamised! Samas eelmisel ei salvestata solditemeid, nii et ehk ei.
+    	session.save(sale);
+    	tx.commit();
+    	model.getPurchaseHistoryTableModel().addRow(sale);
+    	
     }
-
 
     public void createStockItem(StockItem stockItem) {
         // Begin transaction
@@ -109,12 +90,17 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 
     public void cancelCurrentPurchase() {
-        // XXX - Cancel current purchase
-        log.info("Current purchase canceled");
+        Sale sale = model.getCurrentSale();
+        for(SoldItem sold:sale.getSoldItems()){
+        	StockItem stock = sold.getStockItem();
+        	stock.setQuantity(stock.getQuantity()+sold.getQuantity());
+        }
+        sale.setSoldItems(new HashSet<SoldItem>());
+        model.getCurrentPurchaseTableModel().fireTableDataChanged();
     }
 
     public void startNewPurchase() {
-        // XXX - Start new purchase
+        model.getCurrentPurchaseTableModel().fireTableDataChanged();
         log.info("New purchase started");
     }
 

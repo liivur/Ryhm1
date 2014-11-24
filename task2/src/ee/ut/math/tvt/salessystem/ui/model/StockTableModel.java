@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
@@ -13,11 +15,13 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
-
+	
 	public StockTableModel() {
 		super(new String[] {"Id", "Name", "Price", "Quantity"});
+		this.rows = new ArrayList<StockItem>();
 	}
-
+	
+	protected List<StockItem> rows;
 	@Override
 	protected Object getColumnValue(StockItem item, int columnIndex) {
 		switch (columnIndex) {
@@ -93,6 +97,9 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 
 		return buffer.toString();
+	}
+	public List<StockItem> getTableRows(){
+		return rows;
 	}
 
 }
