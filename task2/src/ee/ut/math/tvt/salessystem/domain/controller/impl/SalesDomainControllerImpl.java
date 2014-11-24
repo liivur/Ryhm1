@@ -96,7 +96,19 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         model.getPurchaseHistoryTableModel().addRow(sale);
 
     }
-
+    
+    public void registerSale(Sale sale){
+    	Transaction tx = session.beginTransaction();
+    	sale.setSellingTime(new Date());
+    	for(SoldItem solditem:sale.getSoldItems()){
+    		session.save(solditem.getStockItem());
+    	}
+    	///TODO:Siin voib olla kala - solditemi salvestamised! Samas eelmisel ei salvestata solditemeid, nii et ehk ei.
+    	session.save(sale);
+    	tx.commit();
+    	model.getPurchaseHistoryTableModel().addRow(sale);
+    	
+    }
 
     public void createStockItem(StockItem stockItem) {
         // Begin transaction
