@@ -7,8 +7,11 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
+
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -120,8 +123,13 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 
     public void cancelCurrentPurchase() {
-        // XXX - Cancel current purchase
-        log.info("Current purchase canceled");
+        Sale sale = model.getCurrentSale();
+        for(SoldItem sold:sale.getSoldItems()){
+        	StockItem stock = sold.getStockItem();
+        	stock.setQuantity(stock.getQuantity()+sold.getQuantity());
+        }
+        sale.setSoldItems(new HashSet<SoldItem>());
+        model.getCurrentPurchaseTableModel().fireTableDataChanged();
     }
 
     public void startNewPurchase() {
