@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
 
 /**
  * Sale object. Contains client and sold items.
@@ -84,15 +87,22 @@ public class Sale implements DisplayableItem {
         soldItems.add(item);
     }
     
-    public void addItem(StockItem item,int quantity){
-    	for (SoldItem solditem: soldItems){
-    		if (solditem.getStockItem() == item){
-    			solditem.setQuantity(solditem.getQuantity()+quantity);
-    			return;
-    		}
+    public void addItem (StockItem item,int quantity) throws SalesSystemException{
+    	if (item.getQuantity()<quantity){
+    		throw new SalesSystemException();
     	}
-    	soldItems.add(new SoldItem(item,quantity));
-    	return;
+    	else{
+	    	for (SoldItem solditem: soldItems){
+	    		if (solditem.getStockItem() == item){
+	    			solditem.setQuantity(solditem.getQuantity()+quantity);
+	    			item.setQuantity(item.getQuantity()-quantity);
+	    			return;
+	    		}
+	    	}
+	    	soldItems.add(new SoldItem(item,quantity));
+	    	item.setQuantity(item.getQuantity()-quantity);
+    	}
+
     }
 
     public double getSum() {

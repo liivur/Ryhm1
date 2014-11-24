@@ -184,8 +184,7 @@ public class PurchaseItemPanel extends JPanel {
 
             // If there is not enough stock left in the warehouse to add this quantity..
             try {
-                model.getCurrentPurchaseTableModel()
-                    .addItem(new SoldItem(stockItem, quantity));
+                model.getCurrentSale().addItem(stockItem, quantity);
             } catch (SalesSystemException e) {
                 showNotEnoughInStockWarning();
             }
