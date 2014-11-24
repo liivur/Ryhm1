@@ -16,7 +16,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 
     private static final long serialVersionUID = 1L;
 
-    protected List<T> rows;
     protected final String[] headers;
 
     public SalesSystemTableModel(final String[] headers) {
@@ -59,9 +58,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
         throw new NoSuchElementException();
     }
 
-    public List<T> getTableRows() {
-        return rows;
-    }
+    public abstract List<T> getTableRows();
 
     public void clear() {
         rows = new ArrayList<T>();
