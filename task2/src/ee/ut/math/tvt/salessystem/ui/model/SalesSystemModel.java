@@ -7,7 +7,6 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
