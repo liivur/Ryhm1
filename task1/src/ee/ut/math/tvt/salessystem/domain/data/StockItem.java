@@ -48,6 +48,14 @@ public class StockItem implements Cloneable, DisplayableItem {
         writeToDB();
     }
 
+    public StockItem(Long id, String name, String desc, double price, int quantity, boolean noDb) {
+        this.id = id;
+        this.name = name;
+        this.description = desc;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     /**
      * Constructs new  <code>StockItem</code>.
      */
