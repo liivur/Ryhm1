@@ -1,8 +1,10 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ee.ut.math.tvt.salessystem.domain.data.Client;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 /**
  * Client model.
@@ -12,6 +14,7 @@ public class ClientTableModel extends SalesSystemTableModel<Client> {
 
 	public ClientTableModel() {
 		super(new String[] { "Id", "First name", "Discount"});
+		this.rows = new ArrayList<Client>();
 	}
 	protected List<Client> rows;
 

@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -17,6 +18,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	
 	public StockTableModel() {
 		super(new String[] {"Id", "Name", "Price", "Quantity"});
+		this.rows = new ArrayList<StockItem>();
 	}
 	
 	protected List<StockItem> rows;
